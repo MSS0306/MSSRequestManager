@@ -15,6 +15,7 @@
 @property (nonatomic,strong)MSSRequestModel *requestItem;
 @property (nonatomic,assign)BOOL isExecuting;
 @property (nonatomic,assign)BOOL isFinished;
+@property (nonatomic,strong)NSRecursiveLock *recursiveLock;
 
 @end
 
@@ -29,33 +30,34 @@
         _requestItem = requestItem;
         _isExecuting = NO;
         _isFinished = NO;
+        _recursiveLock = [[NSRecursiveLock alloc]init];
     }
     return self;
 }
 
 - (void)start
 {
-    @synchronized (self) {
-        if([self isCancelled])
-        {
-            self.isFinished = YES;
-            return;
-        }
-        self.isExecuting = YES;
-        [_request uploadFileWithRequestItem:_requestItem success:^(NSURLSessionDataTask *task, id responseObject) {
-            if([_delegate respondsToSelector:@selector(requestSuccessTask:responseObject:)])
-            {
-                [_delegate requestSuccessTask:task responseObject:responseObject];
-            }
-            [self requestFinish];
-        } fail:^(NSURLSessionDataTask *task, NSError *error) {
-            if([_delegate respondsToSelector:@selector(requestFailTask:error:)])
-            {
-                [_delegate requestFailTask:task error:error];
-            }
-            [self requestFinish];
-        }];
+    [_recursiveLock lock];
+    if([self isCancelled])
+    {
+        self.isFinished = YES;
+        return;
     }
+    self.isExecuting = YES;
+    [_request uploadFileWithRequestItem:_requestItem success:^(id responseObject) {
+        if([_delegate respondsToSelector:@selector(requestSuccessResponseObject:)])
+        {
+            [_delegate requestSuccessResponseObject:responseObject];
+        }
+        [self requestFinish];
+    } fail:^(NSError *error) {
+        if([_delegate respondsToSelector:@selector(requestFailError:)])
+        {
+            [_delegate requestFailError:error];
+        }
+        [self requestFinish];
+    }];
+    [_recursiveLock unlock];
 }
 
 - (void)requestFinish
@@ -71,20 +73,20 @@
 
 - (void)setIsExecuting:(BOOL)isExecuting
 {
-    @synchronized(self) {
-        [self willChangeValueForKey:@"isExecuting"];
-        _isExecuting = isExecuting;
-        [self didChangeValueForKey:@"isExecuting"];
-    }
+    [_recursiveLock lock];
+    [self willChangeValueForKey:@"isExecuting"];
+    _isExecuting = isExecuting;
+    [self didChangeValueForKey:@"isExecuting"];
+    [_recursiveLock unlock];
 }
 
 - (void)setIsFinished:(BOOL)isFinished
 {
-    @synchronized(self) {
-        [self willChangeValueForKey:@"isFinished"];
-        _isFinished = isFinished;
-        [self didChangeValueForKey:@"isFinished"];
-    }
+    [_recursiveLock lock];
+    [self willChangeValueForKey:@"isFinished"];
+    _isFinished = isFinished;
+    [self didChangeValueForKey:@"isFinished"];
+    [_recursiveLock unlock];
 }
 
 - (void)cancelRequest

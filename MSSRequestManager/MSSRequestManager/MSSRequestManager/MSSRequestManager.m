@@ -41,17 +41,17 @@
 
 - (void)startWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail
 {
-    [_request startWithRequestItem:requestItem success:^(NSURLSessionDataTask *task, id responseObject) {
+    [_request startWithRequestItem:requestItem success:^(id responseObject) {
         [_requestItemArray removeObject:requestItem];
         if(success)
         {
-            success(task,responseObject);
+            success(responseObject);
         }
-    } fail:^(NSURLSessionDataTask *task, NSError *error) {
+    } fail:^(NSError *error) {
         [_requestItemArray removeObject:requestItem];
         if(fail)
         {
-            fail(task,error);
+            fail(error);
         }
     }];
     [_requestItemArray addObject:requestItem];
@@ -59,15 +59,15 @@
 
 - (void)uploadFileWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail
 {
-    [_request uploadFileWithRequestItem:requestItem success:^(NSURLSessionDataTask *task, id responseObject) {
+    [_request uploadFileWithRequestItem:requestItem success:^(id responseObject) {
         if(success)
         {
-            success(task,responseObject);
+            success(responseObject);
         }
-    } fail:^(NSURLSessionDataTask *task, NSError *error) {
+    } fail:^(NSError *error) {
         if(fail)
         {
-            fail(task,error);
+            fail(error);
         }
     }];
     [_requestItemArray addObject:requestItem];
@@ -93,15 +93,15 @@
 // 批量上传图片
 - (void)uploadBatchFileWithRequestItemArray:(NSArray *)requestItemArray success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail finish:(MSSBatchRequestFinish)finish
 {
-    [self.batchRequest uploadBatchFileWithRequestItemArray:requestItemArray success:^(NSURLSessionDataTask *task, id responseObject) {
+    [self.batchRequest uploadBatchFileWithRequestItemArray:requestItemArray success:^(id responseObject) {
         if(success)
         {
-            success(task,responseObject);
+            success(responseObject);
         }
-    } fail:^(NSURLSessionDataTask *task, NSError *error) {
+    } fail:^(NSError *error) {
         if(fail)
         {
-            fail(task,error);
+            fail(error);
         }
     } finish:^{
         if(finish)

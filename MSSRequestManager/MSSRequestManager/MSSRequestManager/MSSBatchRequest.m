@@ -47,20 +47,20 @@
     }
 }
 
-- (void)requestSuccessTask:(NSURLSessionDataTask *)task responseObject:(id)responseObject
+- (void)requestSuccessResponseObject:(id)responseObject
 {
     if(_success)
     {
-        _success(task,responseObject);
+        _success(responseObject);
     }
     [self requestFinish];
 }
 
-- (void)requestFailTask:(NSURLSessionDataTask *)task error:(NSError *)error
+- (void)requestFailError:(NSError *)error
 {
     if(_fail)
     {
-        _fail(task,error);
+        _fail(error);
     }
     [self requestFinish];
 }

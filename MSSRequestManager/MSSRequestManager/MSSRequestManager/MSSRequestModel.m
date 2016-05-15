@@ -15,8 +15,11 @@
     self = [super init];
     if(self)
     {
+        _isFromCache = NO;
         _requestType = MSSRequestModelPostType;
         _uploadMimeType = @"image/jpeg";
+        _cachePolicy = MSSRequestDefaultCachePolicy;
+        _timeInterval = 60.0f;
     }
     return self;
 }

@@ -14,9 +14,13 @@
 @interface MSSRequestManager : NSObject
 
 + (MSSRequestManager *)sharedInstance;
+// 普通Get,Post请求
 - (void)startWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail;
+// 上传文件
 - (void)uploadFileWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail;
+// 取消指定请求
 - (void)cancelWithRequestItem:(MSSRequestModel *)requestItem;
+// 取消全部请求
 - (void)cancelAllRequest;
 
 // 批量上传图片

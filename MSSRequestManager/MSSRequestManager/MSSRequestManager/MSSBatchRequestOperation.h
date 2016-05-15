@@ -10,8 +10,8 @@
 #import "MSSRequestModel.h"
 
 @protocol MSSBatchRequestOperationDelegate <NSObject>
-- (void)requestSuccessTask:(NSURLSessionDataTask *)task responseObject:(id)responseObject;
-- (void)requestFailTask:(NSURLSessionDataTask *)task error:(NSError *)error;
+- (void)requestSuccessResponseObject:(id)responseObject;
+- (void)requestFailError:(NSError *)error;
 @end
 
 @interface MSSBatchRequestOperation : NSOperation
