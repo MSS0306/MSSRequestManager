@@ -112,9 +112,10 @@
 // 初始化AFHTTPSessionManager
 - (AFHTTPSessionManager *)createSessionManagerWithRequestItem:(MSSRequestModel *)requestItem
 {
-    AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
+    NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFHTTPSessionManager *sessionManager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:sessionConfiguration];
     sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html", nil];
-    sessionManager.requestSerializer.timeoutInterval = requestItem.timeInterval;
+    sessionManager.requestSerializer.timeoutInterval = requestItem.timeInterval;    
     if(requestItem.headers)
     {
         [requestItem.headers enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {

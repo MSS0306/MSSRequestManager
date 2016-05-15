@@ -41,6 +41,9 @@ typedef NS_ENUM(NSInteger,MSSRequestModelType)
  */
 // post/get方法，默认为post方法
 @property (nonatomic,assign)MSSRequestModelType requestType;
+// baseUrl和requestPath共同使用（setRequestPath方法中赋值requestUrl）
+@property (nonatomic,copy)NSString *baseUrl;
+@property (nonatomic,copy)NSString *requestPath;
 // url地址
 @property (nonatomic,copy)NSString *requestUrl;
 // 参数

@@ -63,7 +63,6 @@
     NSString *fileName = [NSString stringWithFormat:@"%@%@",requestItem.requestUrl,allValueString];
     NSString *md5String = [self stringToMD5:fileName];
     NSString *path = [NSString stringWithFormat:@"%@/%@",cacheDiskPath,md5String];
-    NSLog(@"path-->%@",path);
     return path;
 }
 
