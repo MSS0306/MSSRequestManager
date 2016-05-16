@@ -7,6 +7,7 @@
 //
 
 #import "MSSRequestManager.h"
+#import "MSSRequestLoadingView.h"
 
 @interface MSSRequestManager ()
 
@@ -41,13 +42,29 @@
 
 - (void)startWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail
 {
+    // 显示加载框
+    if(requestItem.requestLoadingSuperView)
+    {
+        [MSSRequestLoadingView showRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
+    }
+    
     [_request startWithRequestItem:requestItem success:^(id responseObject) {
+        // 隐藏加载框
+        if(requestItem.requestLoadingSuperView)
+        {
+            [MSSRequestLoadingView hideRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
+        }
         [_requestItemArray removeObject:requestItem];
         if(success)
         {
             success(responseObject);
         }
     } fail:^(NSError *error) {
+        // 隐藏加载框
+        if(requestItem.requestLoadingSuperView)
+        {
+            [MSSRequestLoadingView hideRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
+        }
         [_requestItemArray removeObject:requestItem];
         if(fail)
         {
@@ -59,12 +76,27 @@
 
 - (void)uploadFileWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail
 {
+    // 显示加载框
+    if(requestItem.requestLoadingSuperView)
+    {
+        [MSSRequestLoadingView showRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
+    }
     [_request uploadFileWithRequestItem:requestItem success:^(id responseObject) {
+        // 隐藏加载框
+        if(requestItem.requestLoadingSuperView)
+        {
+            [MSSRequestLoadingView hideRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
+        }
         if(success)
         {
             success(responseObject);
         }
     } fail:^(NSError *error) {
+        // 隐藏加载框
+        if(requestItem.requestLoadingSuperView)
+        {
+            [MSSRequestLoadingView hideRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
+        }
         if(fail)
         {
             fail(error);
@@ -103,11 +135,11 @@
         {
             fail(error);
         }
-    } finish:^{
-        if(finish)
-        {
-            finish();
-        }
+    } finish:^(NSInteger failCount) {
+       if(finish)
+       {
+           finish(failCount);
+       }
     }];
 }
 

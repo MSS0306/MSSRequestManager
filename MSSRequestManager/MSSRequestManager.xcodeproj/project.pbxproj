@@ -26,6 +26,9 @@
 		40D935081CDE0AD80057E384 /* MSSRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D935071CDE0AD80057E384 /* MSSRequest.m */; };
 		40D9350D1CDE0CA30057E384 /* MSSRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D9350A1CDE0CA30057E384 /* MSSRequestModel.m */; };
 		690A24331CE0368500EB7C2F /* MSSRequestCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 690A24321CE0368500EB7C2F /* MSSRequestCache.m */; };
+		69DE1FA91CE9C464005C3FBB /* MSSRequestLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DE1FA81CE9C464005C3FBB /* MSSRequestLoadingView.m */; };
+		69DE1FB01CE9CA28005C3FBB /* MSSRequestLoadingImageView@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69DE1FAE1CE9CA28005C3FBB /* MSSRequestLoadingImageView@3x.png */; };
+		69DE1FB11CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69DE1FAF1CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +69,10 @@
 		40D9350F1CDE146A0057E384 /* MSSRequestManagerDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSSRequestManagerDefine.h; sourceTree = "<group>"; };
 		690A24311CE0368500EB7C2F /* MSSRequestCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSRequestCache.h; sourceTree = "<group>"; };
 		690A24321CE0368500EB7C2F /* MSSRequestCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSRequestCache.m; sourceTree = "<group>"; };
+		69DE1FA71CE9C464005C3FBB /* MSSRequestLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSRequestLoadingView.h; sourceTree = "<group>"; };
+		69DE1FA81CE9C464005C3FBB /* MSSRequestLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSRequestLoadingView.m; sourceTree = "<group>"; };
+		69DE1FAE1CE9CA28005C3FBB /* MSSRequestLoadingImageView@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MSSRequestLoadingImageView@3x.png"; sourceTree = "<group>"; };
+		69DE1FAF1CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MSSRequestLoadingImageView@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +145,10 @@
 				40D9350A1CDE0CA30057E384 /* MSSRequestModel.m */,
 				690A24311CE0368500EB7C2F /* MSSRequestCache.h */,
 				690A24321CE0368500EB7C2F /* MSSRequestCache.m */,
+				69DE1FA71CE9C464005C3FBB /* MSSRequestLoadingView.h */,
+				69DE1FA81CE9C464005C3FBB /* MSSRequestLoadingView.m */,
+				69DE1FAF1CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png */,
+				69DE1FAE1CE9CA28005C3FBB /* MSSRequestLoadingImageView@3x.png */,
 			);
 			path = MSSRequestManager;
 			sourceTree = "<group>";
@@ -222,7 +233,9 @@
 			files = (
 				40D934E71CDDAB250057E384 /* LaunchScreen.storyboard in Resources */,
 				40D934E41CDDAB250057E384 /* Assets.xcassets in Resources */,
+				69DE1FB11CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png in Resources */,
 				40D934E21CDDAB250057E384 /* Main.storyboard in Resources */,
+				69DE1FB01CE9CA28005C3FBB /* MSSRequestLoadingImageView@3x.png in Resources */,
 				40D8D7721CDF25DD002EE8E5 /* testtest.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,6 +254,7 @@
 				40D934DF1CDDAB250057E384 /* ViewController.m in Sources */,
 				40D935081CDE0AD80057E384 /* MSSRequest.m in Sources */,
 				40D934F11CDDC9BC0057E384 /* MSSRequestManager.m in Sources */,
+				69DE1FA91CE9C464005C3FBB /* MSSRequestLoadingView.m in Sources */,
 				40D935001CDDF5920057E384 /* AFHTTPSessionManager.m in Sources */,
 				40D935051CDDF5920057E384 /* AFURLSessionManager.m in Sources */,
 				40D934DC1CDDAB250057E384 /* AppDelegate.m in Sources */,

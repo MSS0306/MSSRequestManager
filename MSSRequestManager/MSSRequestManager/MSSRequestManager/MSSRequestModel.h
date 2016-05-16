@@ -52,6 +52,8 @@ typedef NS_ENUM(NSInteger,MSSRequestModelType)
 @property (nonatomic,strong)NSDictionary *headers;
 // 请求超时时间，默认为60秒
 @property (nonatomic,assign)NSTimeInterval timeInterval;
+// 设置加载框父视图（需要加载框时设置）
+@property (nonatomic,strong)UIView *requestLoadingSuperView;
 
 /*
  缓存设置
@@ -62,7 +64,6 @@ typedef NS_ENUM(NSInteger,MSSRequestModelType)
 @property (nonatomic,assign)MSSRequestCachePolicy cachePolicy;
 // cachePolicy为MSSRequestUseLocalCachePolicy时可设置缓存秒数
 @property (nonatomic,assign)NSTimeInterval cacheSecond;
-
 /*
  上传文件
  */

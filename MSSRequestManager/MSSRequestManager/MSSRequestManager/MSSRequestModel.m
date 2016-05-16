@@ -20,7 +20,7 @@
         _uploadMimeType = @"image/jpeg";
         _cachePolicy = MSSRequestDefaultCachePolicy;
         _timeInterval = 60.0f;
-        _baseUrl = @"http://v2.toys178.com/";
+        _baseUrl = @"http://xx.xxx.com/Api/";
     }
     return self;
 }

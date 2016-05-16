@@ -12,7 +12,8 @@
 
 @property (nonatomic,strong)NSOperationQueue *queue;
 @property (nonatomic,strong)NSArray *requestItemArray;
-@property (nonatomic,assign)NSInteger finishCount;
+@property (nonatomic,assign)NSInteger successCount;
+@property (nonatomic,assign)NSInteger failCount;
 @property (nonatomic,copy)MSSRequestSuccessBlock success;
 @property (nonatomic,copy)MSSRequestFailBlock fail;
 @property (nonatomic,copy)MSSBatchRequestFinish finish;
@@ -27,8 +28,9 @@
     if(self)
     {
         _queue = [[NSOperationQueue alloc]init];
-        _queue.maxConcurrentOperationCount = 4;
-        _finishCount = 0;
+        _queue.maxConcurrentOperationCount = 3;
+        _successCount = 0;
+        _failCount = 0;
     }
     return self;
 }
@@ -53,6 +55,7 @@
     {
         _success(responseObject);
     }
+    _successCount++;
     [self requestFinish];
 }
 
@@ -62,17 +65,17 @@
     {
         _fail(error);
     }
+    _failCount++;
     [self requestFinish];
 }
 
 - (void)requestFinish
 {
-    _finishCount++;
-    if(_finishCount == _requestItemArray.count)
+    if(_successCount + _failCount == _requestItemArray.count)
     {
         if(_finish)
         {
-            _finish();
+            _finish(_failCount);
         }
     }
 }
@@ -82,6 +85,11 @@
     for (MSSBatchRequestOperation *operation in _queue.operations)
     {
         [operation cancelRequest];
+    }
+    _failCount = _requestItemArray.count - _successCount;
+    if(_finish)
+    {
+        _finish(_failCount);
     }
 }
 

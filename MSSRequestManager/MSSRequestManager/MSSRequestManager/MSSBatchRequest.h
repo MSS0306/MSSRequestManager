@@ -10,7 +10,7 @@
 #import "MSSRequest.h"
 #import "MSSBatchRequestOperation.h"
 
-typedef void(^MSSBatchRequestFinish)(void);
+typedef void(^MSSBatchRequestFinish)(NSInteger failCount);
 
 @interface MSSBatchRequest : NSObject<MSSBatchRequestOperationDelegate>
 - (void)uploadBatchFileWithRequestItemArray:(NSArray *)requestItemArray success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail finish:(MSSBatchRequestFinish)finish;
