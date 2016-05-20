@@ -29,51 +29,52 @@ typedef NS_ENUM(NSInteger,MSSRequestModelType)
 /*
  执行请求时，封装时赋值
  */
-// 当前任务
+/// 当前任务
 @property (nonatomic,strong)NSURLSessionTask *task;
-// 结果response
+/// 结果response
 @property (nonatomic,strong)NSDictionary *responseDict;
-// 是否来自缓存
+/// 是否来自缓存
 @property (nonatomic,assign)BOOL isFromCache;
 
 /*
  设置请求属性
  */
-// post/get方法，默认为post方法
+/// post/get方法，默认为post方法
 @property (nonatomic,assign)MSSRequestModelType requestType;
-// baseUrl和requestPath共同使用（setRequestPath方法中赋值requestUrl）
+/// baseUrl和requestPath共同使用（setRequestPath方法中赋值requestUrl）
 @property (nonatomic,copy)NSString *baseUrl;
+/// baseUrl和requestPath共同使用（setRequestPath方法中赋值requestUrl）
 @property (nonatomic,copy)NSString *requestPath;
-// url地址
+/// url地址
 @property (nonatomic,copy)NSString *requestUrl;
-// 参数
+/// 参数
 @property (nonatomic,strong)NSDictionary *params;
-// heaer
+/// heaer
 @property (nonatomic,strong)NSDictionary *headers;
-// 请求超时时间，默认为60秒
+/// 请求超时时间，默认为60秒
 @property (nonatomic,assign)NSTimeInterval timeInterval;
-// 设置加载框父视图（需要加载框时设置）
+/// 设置加载框父视图（需要加载框时设置）
 @property (nonatomic,strong)UIView *requestLoadingSuperView;
 
 /*
  缓存设置
  */
-// 指定缓存文件夹，按业务分文件夹便于清空缓存
+/// 指定缓存文件夹，按业务分文件夹便于清空缓存
 @property (nonatomic,copy)NSString *cacheFolderName;
-// 缓存策略
+/// 缓存策略
 @property (nonatomic,assign)MSSRequestCachePolicy cachePolicy;
-// cachePolicy为MSSRequestUseLocalCachePolicy时可设置缓存秒数
+/// cachePolicy为MSSRequestUseLocalCachePolicy时可设置缓存秒数
 @property (nonatomic,assign)NSTimeInterval cacheSecond;
 /*
  上传文件
  */
-// 自己实现上传formData
+/// 自己实现上传formData
 @property (nonatomic,copy)void(^AFMultipartFormDataBlock)(id<AFMultipartFormData>);
-// 文件data
+/// 文件data
 @property (nonatomic,copy)NSData *uploadData;
-// 服务端对应的名称
+/// 服务端对应的名称
 @property (nonatomic,copy)NSString *uploadName;
-// 上传图片名称
+/// 上传图片名称
 @property (nonatomic,copy)NSString *uploadFileName;
 /*
  - `image/tiff`
@@ -87,7 +88,7 @@ typedef NS_ENUM(NSInteger,MSSRequestModelType)
  - `image/x-xbitmap`
  - `image/x-win-bitmap`
  */
-// 默认为image/jpeg
+/// 默认为image/jpeg
 @property (nonatomic,copy)NSString *uploadMimeType;
 
 @end

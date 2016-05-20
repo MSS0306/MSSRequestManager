@@ -43,11 +43,4 @@
     
 }
 
-
-- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler{
-    
-    NSLog(@"呜呜呜呜呜呜呜呜");
-}
-
-
 @end

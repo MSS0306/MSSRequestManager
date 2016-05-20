@@ -14,9 +14,21 @@ typedef void(^MSSRequestFailBlock)(NSError *error);
 
 @interface MSSRequest : NSObject
 
-// 普通Get,Post请求
+/**
+ *  发起一个请求
+ *
+ *  @param requestItem 请求参数数据对象
+ *  @param success     请求成功回调
+ *  @param fail        请求失败回调
+ */
 - (void)startWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail;
-// 上传文件
+/**
+ *  发起一个上传文件请求
+ *
+ *  @param requestItem 请求参数数据对象
+ *  @param success     请求成功回调
+ *  @param fail        请求失败回调
+ */
 - (void)uploadFileWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail;
 
 @end
