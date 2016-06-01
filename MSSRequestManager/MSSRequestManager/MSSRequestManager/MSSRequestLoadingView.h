@@ -10,7 +10,17 @@
 
 @interface MSSRequestLoadingView : UIView
 
-+ (void)showRequestLoadingViewWithSuperView:(UIView *)superView;
-+ (void)hideRequestLoadingViewWithSuperView:(UIView *)superView;
+/**
+ *  显示加载等待框
+ *
+ *  @param superView 父视图
+ *
+ *  @return 当前加载框
+ */
++ (MSSRequestLoadingView *)showRequestLoadingViewWithSuperView:(UIView *)superView;
+/**
+ *  隐藏加载等待框
+ */
+- (void)hideRequestLoadingView;
 
 @end

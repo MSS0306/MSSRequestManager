@@ -54,12 +54,11 @@
     if(indexPath.row == 0)
     {
         MSSRequestModel *requestItem = [[MSSRequestModel alloc]init];
-        requestItem.params = @{@"username":@"18617823173",@"password":@"111111"};
+        requestItem.params = @{@"username":@"18617823173",@"password":@"000000"};
         requestItem.requestPath = @"Assistant/Login/index";
-        requestItem.cachePolicy = MSSRequestAlwaysReplaceLocalCachePolicy;
         requestItem.cacheSecond = 30.0f;
         requestItem.cacheFolderName = @"Login";
-        requestItem.requestLoadingSuperView = self.view;
+        requestItem.isShowLoadingView = YES;
         [[MSSRequestManager sharedInstance]startWithRequestItem:requestItem success:^(id responseObject) {
             _sid = responseObject[@"content"][@"sid"];
         } fail:^(NSError *error) {
@@ -72,6 +71,7 @@
         requestItem.requestPath = @"Public/Member/UpdateHead";
         requestItem.params = @{@"seller_id":@"49",@"user_id":@"1076",@"sid":[NSString stringWithFormat:@"%@",_sid]};
         requestItem.requestLoadingSuperView = self.view;
+        requestItem.failAlertText = @"上传头像失败";
         
         //    requestItem.uploadName = @"head";
         //    requestItem.uploadFileName = @"1234567.jpg";

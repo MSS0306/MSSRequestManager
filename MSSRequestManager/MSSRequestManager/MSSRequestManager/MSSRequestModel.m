@@ -20,7 +20,9 @@
         _uploadMimeType = @"image/jpeg";
         _cachePolicy = MSSRequestDefaultCachePolicy;
         _timeInterval = 60.0f;
-        _baseUrl = @"http://xx.xxx.com/Api/";
+        _baseUrl = @"http://xx.xx.com/Api/";
+        _isShowLoadingView = NO;
+        _isShowFailAlertView = YES;
     }
     return self;
 }
@@ -32,6 +34,26 @@
     {
         _requestUrl = [NSString stringWithFormat:@"%@%@",_baseUrl,_requestPath];
     }
+}
+
+- (NSInteger)statusCode
+{
+    if([_task.response isKindOfClass:[NSHTTPURLResponse class]])
+    {
+        NSHTTPURLResponse *response = (NSHTTPURLResponse *)_task.response;
+        return response.statusCode;
+    }
+    return 0;
+}
+
+- (NSDictionary *)requestHeaders
+{
+    if([_task.response isKindOfClass:[NSHTTPURLResponse class]])
+    {
+        NSHTTPURLResponse *response = (NSHTTPURLResponse *)_task.response;
+        return response.allHeaderFields;
+    }
+    return nil;
 }
 
 

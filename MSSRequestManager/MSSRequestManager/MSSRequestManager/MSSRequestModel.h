@@ -11,6 +11,12 @@
 
 @class AFURLRequestSerialization;
 
+typedef NS_ENUM(NSInteger,MSSRequestSerializerType)
+{
+    MSSRequestSerializerHttpType = 0,
+    MSSRequestSerializerJsonType
+};
+
 typedef NS_ENUM(NSInteger,MSSRequestCachePolicy)
 {
     MSSRequestDefaultCachePolicy = 0,// 不使用缓存
@@ -35,6 +41,10 @@ typedef NS_ENUM(NSInteger,MSSRequestModelType)
 @property (nonatomic,strong)NSDictionary *responseDict;
 /// 是否来自缓存
 @property (nonatomic,assign)BOOL isFromCache;
+/// responseCode
+@property (nonatomic,assign,readonly)NSInteger statusCode;
+/// responseHeaders
+@property (nonatomic,assign,readonly)NSDictionary *reponseHeaders;
 
 /*
  设置请求属性
@@ -50,11 +60,20 @@ typedef NS_ENUM(NSInteger,MSSRequestModelType)
 /// 参数
 @property (nonatomic,strong)NSDictionary *params;
 /// heaer
-@property (nonatomic,strong)NSDictionary *headers;
+@property (nonatomic,strong)NSDictionary *requestHeaders;
 /// 请求超时时间，默认为60秒
 @property (nonatomic,assign)NSTimeInterval timeInterval;
-/// 设置加载框父视图（需要加载框时设置）
+/// 请求格式
+@property (nonatomic,assign)MSSRequestSerializerType requestSerializerType;
+
+/// 是否显示加载框
+@property (nonatomic,assign)BOOL isShowLoadingView;
+/// 设置加载框父视图（默认加在window上）
 @property (nonatomic,strong)UIView *requestLoadingSuperView;
+/// 请求失败是否弹出提示框（默认开启提示）
+@property (nonatomic,assign)BOOL isShowFailAlertView;
+/// 请求失败弹出提示框内容
+@property (nonatomic,copy)NSString *failAlertText;
 
 /*
  缓存设置

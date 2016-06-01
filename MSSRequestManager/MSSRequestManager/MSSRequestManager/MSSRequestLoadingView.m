@@ -17,26 +17,18 @@
 
 @implementation MSSRequestLoadingView
 
-+ (void)showRequestLoadingViewWithSuperView:(UIView *)superView
++ (MSSRequestLoadingView *)showRequestLoadingViewWithSuperView:(UIView *)superView
 {
     MSSRequestLoadingView *requestLoadingView = [[MSSRequestLoadingView alloc]initWithFrame:superView.bounds];
     requestLoadingView.backgroundColor = [UIColor clearColor];
     [superView addSubview:requestLoadingView];
+    return requestLoadingView;
 }
 
-+ (void)hideRequestLoadingViewWithSuperView:(UIView *)superView
+- (void)hideRequestLoadingView
 {
-    for (UIView *subView in superView.subviews)
-    {
-        if([subView isKindOfClass:[self class]])
-        {
-            MSSRequestLoadingView *requestLoadingView = (MSSRequestLoadingView *)subView;
-            [requestLoadingView stopAnimation];
-            [requestLoadingView removeFromSuperview];
-            requestLoadingView = nil;
-            break;
-        }
-    }
+    [self stopAnimation];
+    [self removeFromSuperview];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame

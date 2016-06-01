@@ -8,6 +8,7 @@
 
 #import "MSSRequestManager.h"
 #import "MSSRequestLoadingView.h"
+#import "MSSAlertView.h"
 
 @interface MSSRequestManager ()
 
@@ -43,16 +44,17 @@
 - (void)startWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail
 {
     // 显示加载框
-    if(requestItem.requestLoadingSuperView)
+    MSSRequestLoadingView *requestLoadingView = nil;
+    if(requestItem.isShowLoadingView)
     {
-        [MSSRequestLoadingView showRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
+        UIView *superView = requestItem.requestLoadingSuperView ? requestItem.requestLoadingSuperView : [UIApplication sharedApplication].keyWindow;
+        requestLoadingView = [MSSRequestLoadingView showRequestLoadingViewWithSuperView:superView];
     }
-    
     [_request startWithRequestItem:requestItem success:^(id responseObject) {
         // 隐藏加载框
-        if(requestItem.requestLoadingSuperView)
+        if(requestItem.isShowLoadingView)
         {
-            [MSSRequestLoadingView hideRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
+            [requestLoadingView hideRequestLoadingView];
         }
         [_requestItemArray removeObject:requestItem];
         if(success)
@@ -60,10 +62,12 @@
             success(responseObject);
         }
     } fail:^(NSError *error) {
+        // 请求失败提示弹框
+        [self showAlertViewWithRequestItem:requestItem];
         // 隐藏加载框
-        if(requestItem.requestLoadingSuperView)
+        if(requestItem.isShowLoadingView)
         {
-            [MSSRequestLoadingView hideRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
+            [requestLoadingView hideRequestLoadingView];
         }
         [_requestItemArray removeObject:requestItem];
         if(fail)
@@ -77,15 +81,17 @@
 - (void)uploadFileWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail
 {
     // 显示加载框
-    if(requestItem.requestLoadingSuperView)
+    MSSRequestLoadingView *requestLoadingView = nil;
+    if(requestItem.isShowLoadingView)
     {
-        [MSSRequestLoadingView showRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
+        UIView *superView = requestItem.requestLoadingSuperView ? requestItem.requestLoadingSuperView : [UIApplication sharedApplication].keyWindow;
+        requestLoadingView = [MSSRequestLoadingView showRequestLoadingViewWithSuperView:superView];
     }
     [_request uploadFileWithRequestItem:requestItem success:^(id responseObject) {
         // 隐藏加载框
-        if(requestItem.requestLoadingSuperView)
+        if(requestItem.isShowLoadingView)
         {
-            [MSSRequestLoadingView hideRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
+            [requestLoadingView hideRequestLoadingView];
         }
         if(success)
         {
@@ -93,16 +99,35 @@
         }
     } fail:^(NSError *error) {
         // 隐藏加载框
-        if(requestItem.requestLoadingSuperView)
+        if(requestItem.isShowLoadingView)
         {
-            [MSSRequestLoadingView hideRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
+            [requestLoadingView hideRequestLoadingView];
         }
+        // 请求失败提示弹框
+        [self showAlertViewWithRequestItem:requestItem];
         if(fail)
         {
             fail(error);
         }
     }];
     [_requestItemArray addObject:requestItem];
+}
+// 请求失败提示弹框
+- (void)showAlertViewWithRequestItem:(MSSRequestModel *)requestItem
+{
+    if(requestItem.isShowFailAlertView)
+    {
+        NSString *alertText = nil;
+        if(requestItem.failAlertText)
+        {
+            alertText = requestItem.failAlertText;
+        }
+        else
+        {
+            alertText = @"网络异常";
+        }
+        [MSSAlertView showAlertViewWithText:alertText delay:1.0f];
+    }
 }
 
 #pragma mark Cancel Method

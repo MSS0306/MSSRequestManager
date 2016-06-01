@@ -114,11 +114,19 @@
 {
     NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFHTTPSessionManager *sessionManager = [[AFHTTPSessionManager alloc]initWithSessionConfiguration:sessionConfiguration];
-    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html", nil];
-    sessionManager.requestSerializer.timeoutInterval = requestItem.timeInterval;    
-    if(requestItem.headers)
+    if(requestItem.requestSerializerType == MSSRequestSerializerHttpType)
     {
-        [requestItem.headers enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        sessionManager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    }
+    else if(requestItem.requestSerializerType == MSSRequestSerializerJsonType)
+    {
+        sessionManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    }
+    sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html", nil];
+    sessionManager.requestSerializer.timeoutInterval = requestItem.timeInterval;
+    if(requestItem.requestHeaders)
+    {
+        [requestItem.requestHeaders enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             [sessionManager.requestSerializer setValue:obj forHTTPHeaderField:key];
         }];
     }
