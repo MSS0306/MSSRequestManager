@@ -11,9 +11,11 @@
 
 typedef void(^MSSRequestSuccessBlock)(id responseObject);
 typedef void(^MSSRequestFailBlock)(NSError *error);
+typedef void(^MSSRequestProgressBlock)(NSProgress *progress);
 
 @interface MSSRequest : NSObject
 
++ (MSSRequest *)sharedInstance;
 /**
  *  发起一个请求
  *
@@ -28,7 +30,8 @@ typedef void(^MSSRequestFailBlock)(NSError *error);
  *  @param requestItem 请求参数数据对象
  *  @param success     请求成功回调
  *  @param fail        请求失败回调
+ *  @param progress    进度条回调
  */
-- (void)uploadFileWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail;
+- (void)uploadFileWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail progress:(MSSRequestProgressBlock)progress;
 
 @end

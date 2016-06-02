@@ -30,6 +30,8 @@
 		69DE1FB01CE9CA28005C3FBB /* MSSRequestLoadingImageView@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69DE1FAE1CE9CA28005C3FBB /* MSSRequestLoadingImageView@3x.png */; };
 		69DE1FB11CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69DE1FAF1CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png */; };
 		69DE2C201CFEC944009CC00D /* MSSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DE2C1F1CFEC944009CC00D /* MSSAlertView.m */; };
+		69DE2C231CFF0BCF009CC00D /* MSSProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DE2C221CFF0BCF009CC00D /* MSSProgressView.m */; };
+		69F2D2C81D002DD200ED84B5 /* browse09.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 69F2D2C71D002DD200ED84B5 /* browse09.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +78,9 @@
 		69DE1FAF1CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MSSRequestLoadingImageView@2x.png"; sourceTree = "<group>"; };
 		69DE2C1E1CFEC944009CC00D /* MSSAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSAlertView.h; sourceTree = "<group>"; };
 		69DE2C1F1CFEC944009CC00D /* MSSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSAlertView.m; sourceTree = "<group>"; };
+		69DE2C211CFF0BCF009CC00D /* MSSProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSProgressView.h; sourceTree = "<group>"; };
+		69DE2C221CFF0BCF009CC00D /* MSSProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSProgressView.m; sourceTree = "<group>"; };
+		69F2D2C71D002DD200ED84B5 /* browse09.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = browse09.jpg; path = ../../../browse09.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +120,7 @@
 				40D934DD1CDDAB250057E384 /* ViewController.h */,
 				40D934DE1CDDAB250057E384 /* ViewController.m */,
 				40D8D7711CDF25DD002EE8E5 /* testtest.jpg */,
+				69F2D2C71D002DD200ED84B5 /* browse09.jpg */,
 				40D934E01CDDAB250057E384 /* Main.storyboard */,
 				40D934E31CDDAB250057E384 /* Assets.xcassets */,
 				40D934E51CDDAB250057E384 /* LaunchScreen.storyboard */,
@@ -152,6 +158,8 @@
 				69DE1FA81CE9C464005C3FBB /* MSSRequestLoadingView.m */,
 				69DE2C1E1CFEC944009CC00D /* MSSAlertView.h */,
 				69DE2C1F1CFEC944009CC00D /* MSSAlertView.m */,
+				69DE2C211CFF0BCF009CC00D /* MSSProgressView.h */,
+				69DE2C221CFF0BCF009CC00D /* MSSProgressView.m */,
 				69DE1FAF1CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png */,
 				69DE1FAE1CE9CA28005C3FBB /* MSSRequestLoadingImageView@3x.png */,
 			);
@@ -236,6 +244,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69F2D2C81D002DD200ED84B5 /* browse09.jpg in Resources */,
 				40D934E71CDDAB250057E384 /* LaunchScreen.storyboard in Resources */,
 				40D934E41CDDAB250057E384 /* Assets.xcassets in Resources */,
 				69DE1FB11CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png in Resources */,
@@ -263,6 +272,7 @@
 				69DE1FA91CE9C464005C3FBB /* MSSRequestLoadingView.m in Sources */,
 				40D935001CDDF5920057E384 /* AFHTTPSessionManager.m in Sources */,
 				40D935051CDDF5920057E384 /* AFURLSessionManager.m in Sources */,
+				69DE2C231CFF0BCF009CC00D /* MSSProgressView.m in Sources */,
 				40D934DC1CDDAB250057E384 /* AppDelegate.m in Sources */,
 				40D935011CDDF5920057E384 /* AFNetworkReachabilityManager.m in Sources */,
 				40D8D7781CDF2B84002EE8E5 /* MSSBatchRequestOperation.m in Sources */,

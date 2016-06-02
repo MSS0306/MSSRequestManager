@@ -65,11 +65,18 @@ typedef NS_ENUM(NSInteger,MSSRequestModelType)
 @property (nonatomic,assign)NSTimeInterval timeInterval;
 /// 请求格式
 @property (nonatomic,assign)MSSRequestSerializerType requestSerializerType;
-
 /// 是否显示加载框
 @property (nonatomic,assign)BOOL isShowLoadingView;
 /// 设置加载框父视图（默认加在window上）
 @property (nonatomic,strong)UIView *requestLoadingSuperView;
+/// 上传文件时是否显示进度条
+@property (nonatomic,assign)BOOL isShowProgressView;
+/// 设置进度父视图（默认加在window上）
+@property (nonatomic,strong)UIView *requestProgressSuperView;
+/// 请求成功是否弹出提示框（默认关闭提示）
+@property (nonatomic,assign)BOOL isShowSussessAlertView;
+/// 请求成功弹出提示框内容
+@property (nonatomic,copy)NSString *successAlertText;
 /// 请求失败是否弹出提示框（默认开启提示）
 @property (nonatomic,assign)BOOL isShowFailAlertView;
 /// 请求失败弹出提示框内容

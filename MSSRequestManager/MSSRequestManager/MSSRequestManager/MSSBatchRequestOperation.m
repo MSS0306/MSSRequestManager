@@ -11,7 +11,6 @@
 
 @interface MSSBatchRequestOperation ()
 
-@property (nonatomic,strong)MSSRequest *request;
 @property (nonatomic,strong)MSSRequestModel *requestItem;
 @property (nonatomic,assign)BOOL isExecuting;
 @property (nonatomic,assign)BOOL isFinished;
@@ -25,7 +24,6 @@
     self = [super init];
     if(self)
     {
-        _request = [[MSSRequest alloc]init];
         _requestItem = requestItem;
         _isExecuting = NO;
         _isFinished = NO;
@@ -43,7 +41,8 @@
             return;
         }
         self.isExecuting = YES;
-        [_request uploadFileWithRequestItem:_requestItem success:^(id responseObject) {
+        
+        [[MSSRequest sharedInstance]uploadFileWithRequestItem:_requestItem success:^(id responseObject) {
             if([_delegate respondsToSelector:@selector(requestSuccessResponseObject:)])
             {
                 [_delegate requestSuccessResponseObject:responseObject];
@@ -55,6 +54,8 @@
                 [_delegate requestFailError:error];
             }
             [self requestFinish];
+        }progress:^(NSProgress *progress) {
+            
         }];
     }
 }

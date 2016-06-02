@@ -22,11 +22,7 @@ typedef void(^MSSBatchRequestFinish)(NSInteger failCount);
  */
 - (void)uploadBatchFileWithRequestItemArray:(NSArray *)requestItemArray success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail finish:(MSSBatchRequestFinish)finish;
 /**
- *  发起一个上传文件请求
- *
- *  @param requestItem 请求参数数据对象
- *  @param success     请求成功回调
- *  @param fail        请求失败回调
+ *  取消全部请求
  */
 - (void)cancelBatchRequest;
 @end

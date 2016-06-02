@@ -10,6 +10,7 @@
 #import "MSSRequestModel.h"
 #import "MSSRequest.h"
 #import "MSSBatchRequest.h"
+#import "AFHTTPSessionManager.h"
 
 @interface MSSRequestManager : NSObject
 

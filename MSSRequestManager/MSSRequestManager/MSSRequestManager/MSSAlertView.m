@@ -54,11 +54,9 @@
 {
     CGRect textRect = [text boundingRectWithSize:CGSizeMake(MAXFLOAT,MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:_alertLabel.font} context:nil];
     CGSize size = textRect.size;
-    CGRect rect = _maskView.frame;
-    rect.size.width = size.width + 20;
-    rect.size.height = size.height + 30;
-    _maskView.frame = rect;
-    _maskView.center = self.center;
+    CGFloat width = size.width + 20;
+    CGFloat height = size.height + 30;
+    _maskView.frame = CGRectMake((self.frame.size.width - width) / 2, (self.frame.size.height - height) / 2, width, height);
     _alertLabel.text = text;
     _alertLabel.frame = _maskView.bounds;
     self.alpha = 0;

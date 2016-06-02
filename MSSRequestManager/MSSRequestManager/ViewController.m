@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "MSSRequestManagerDefine.h"
 #import "AFURLSessionManager.h"
+#import "MSSProgressView.h"
+
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -30,6 +32,7 @@
     tableView.tableFooterView = [[UIView alloc]init];
     
     _dataArray = @[@"post请求",@"上传一个文件",@"批量上传文件多个请求"];
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -72,13 +75,15 @@
         requestItem.params = @{@"seller_id":@"49",@"user_id":@"1076",@"sid":[NSString stringWithFormat:@"%@",_sid]};
         requestItem.requestLoadingSuperView = self.view;
         requestItem.failAlertText = @"上传头像失败";
-        
+        requestItem.isShowProgressView = YES;
+        requestItem.isShowSussessAlertView = YES;
+        requestItem.successAlertText = @"上传成功";
         //    requestItem.uploadName = @"head";
         //    requestItem.uploadFileName = @"1234567.jpg";
         //    requestItem.uploadData = data;
         
         [requestItem setAFMultipartFormDataBlock:^(id<AFMultipartFormData> formData) {
-            NSString *path = [[NSBundle mainBundle]pathForResource:@"testtest" ofType:@"jpg"];
+            NSString *path = [[NSBundle mainBundle]pathForResource:@"browse09" ofType:@"jpg"];
             NSData *data = [[NSData alloc]initWithContentsOfFile:path];
             [formData appendPartWithFileData:data name:@"head" fileName:@"1234567.jpg" mimeType:@"image/jpeg"];
         }];
@@ -111,7 +116,7 @@
         } fail:^(NSError *error) {
             NSLog(@"失败");
         } finish:^(NSInteger failCount) {
-            NSLog(@"failCount->%ld",failCount);
+            NSLog(@"failCount->%ld",(long)failCount);
         }];
     }
 }
