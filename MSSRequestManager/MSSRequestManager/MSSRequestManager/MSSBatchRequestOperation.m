@@ -14,12 +14,13 @@
 @property (nonatomic,strong)MSSRequestModel *requestItem;
 @property (nonatomic,assign)BOOL isExecuting;
 @property (nonatomic,assign)BOOL isFinished;
+@property (nonatomic,strong)NSURLRequest *request;
 
 @end
 
 @implementation MSSBatchRequestOperation
 
-- (instancetype)initWithRequestItem:(MSSRequestModel *)requestItem
+- (instancetype)initWithRequest:(NSURLRequest *)request requestItem:(MSSRequestModel *)requestItem
 {
     self = [super init];
     if(self)
@@ -27,6 +28,7 @@
         _requestItem = requestItem;
         _isExecuting = NO;
         _isFinished = NO;
+        _request = request;
     }
     return self;
 }
@@ -41,8 +43,7 @@
             return;
         }
         self.isExecuting = YES;
-        
-        [[MSSRequest sharedInstance]uploadFileWithRequestItem:_requestItem success:^(id responseObject) {
+        [[MSSRequest sharedInstance]uploadFileWithRequest:_request requestItem:_requestItem success:^(id responseObject) {
             if([_delegate respondsToSelector:@selector(requestSuccessResponseObject:)])
             {
                 [_delegate requestSuccessResponseObject:responseObject];
@@ -54,8 +55,11 @@
                 [_delegate requestFailError:error];
             }
             [self requestFinish];
-        }progress:^(NSProgress *progress) {
-            
+        } progress:^(NSProgress *progress) {
+            if([_delegate respondsToSelector:@selector(batchOperation:requestProgress:)])
+            {
+                [_delegate batchOperation:self requestProgress:progress];
+            }
         }];
     }
 }

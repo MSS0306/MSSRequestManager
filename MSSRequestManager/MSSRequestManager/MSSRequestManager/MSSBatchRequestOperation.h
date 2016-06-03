@@ -9,16 +9,19 @@
 #import <Foundation/Foundation.h>
 #import "MSSRequestModel.h"
 
+@class MSSBatchRequestOperation;
 @protocol MSSBatchRequestOperationDelegate <NSObject>
 - (void)requestSuccessResponseObject:(id)responseObject;
 - (void)requestFailError:(NSError *)error;
+- (void)batchOperation:(MSSBatchRequestOperation *)bacthOperation requestProgress:(NSProgress *)progress;
 @end
 
 @interface MSSBatchRequestOperation : NSOperation
 
+@property (nonatomic,copy)NSString *operationTag;
 @property (nonatomic,weak)id<MSSBatchRequestOperationDelegate> delegate;
 
-- (instancetype)initWithRequestItem:(MSSRequestModel *)requestItem;
+- (instancetype)initWithRequest:(NSURLRequest *)request requestItem:(MSSRequestModel *)requestItem;
 - (void)cancelRequest;
 
 @end

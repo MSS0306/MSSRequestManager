@@ -25,6 +25,19 @@
     return requestLoadingView;
 }
 
++ (void)hideRequestLoadingViewWithSuperView:(UIView *)superView
+{
+    for (UIView *subView in superView.subviews)
+    {
+        if([subView isKindOfClass:[MSSRequestLoadingView class]])
+        {
+            MSSRequestLoadingView *requestLoadingView = (MSSRequestLoadingView *)subView;
+            [requestLoadingView hideRequestLoadingView];
+            break;
+        }
+    }
+}
+
 - (void)hideRequestLoadingView
 {
     [self stopAnimation];

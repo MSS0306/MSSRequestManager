@@ -11,6 +11,8 @@
 @interface MSSProgressView : UIView
 
 @property (nonatomic,assign)CGFloat progress;
+@property (nonatomic,copy)NSString *fileCountText;
+
 /**
  *  显示进度条
  *
@@ -19,6 +21,12 @@
  *  @return 当前进度条View
  */
 + (MSSProgressView *)showProgressViewWithSuperView:(UIView *)superView;
+/**
+ *  隐藏近图条
+ *
+ *  @param superView 父视图
+ */
++ (void)hideProgressViewWithSuperView:(UIView *)superView;
 /**
  *  隐藏进度条
  */

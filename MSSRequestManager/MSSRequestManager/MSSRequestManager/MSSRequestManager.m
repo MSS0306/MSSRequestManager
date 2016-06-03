@@ -42,20 +42,18 @@
 
 - (void)startWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail
 {
-    MSSRequestLoadingView *requestLoadingView = nil;
     // 显示加载框
     if(requestItem.isShowLoadingView)
     {
-        UIView *superView = requestItem.requestLoadingSuperView ? requestItem.requestLoadingSuperView : [UIApplication sharedApplication].keyWindow;
-        requestLoadingView = [MSSRequestLoadingView showRequestLoadingViewWithSuperView:superView];
+        if(!requestItem.requestLoadingSuperView)
+        {
+            requestItem.requestLoadingSuperView = [UIApplication sharedApplication].keyWindow;
+        }
+        [MSSRequestLoadingView showRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
     }
 
     [[MSSRequest sharedInstance]startWithRequestItem:requestItem success:^(id responseObject) {
-        // 隐藏加载框
-        if(requestItem.isShowLoadingView)
-        {
-            [requestLoadingView hideRequestLoadingView];
-        }
+        [self hideRequestViewWithRequestItem:requestItem];
         // 请求成功提示弹框
         [self showSuccessAlertViewWithRequestItem:requestItem];
         [_requestItemArray removeObject:requestItem];
@@ -64,11 +62,7 @@
             success(responseObject);
         }
     } fail:^(NSError *error) {
-        // 隐藏加载框
-        if(requestItem.isShowLoadingView)
-        {
-            [requestLoadingView hideRequestLoadingView];
-        }
+        [self hideRequestViewWithRequestItem:requestItem];
         // 请求失败提示弹框
         [self showFailAlertViewWithRequestItem:requestItem];
         [_requestItemArray removeObject:requestItem];
@@ -82,31 +76,27 @@
 
 - (void)uploadFileWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail
 {
-    MSSRequestLoadingView *requestLoadingView = nil;
     MSSProgressView *progressView = nil;
     // 显示进度条
     if(requestItem.isShowProgressView)
     {
-        UIView *superView = requestItem.requestProgressSuperView ? requestItem.requestProgressSuperView : [UIApplication sharedApplication].keyWindow;
-        progressView = [MSSProgressView showProgressViewWithSuperView:superView];
+        if(!requestItem.requestProgressSuperView)
+        {
+            requestItem.requestProgressSuperView = [UIApplication sharedApplication].keyWindow;
+        }
+        progressView = [MSSProgressView showProgressViewWithSuperView:requestItem.requestProgressSuperView];
     }
     // 显示加载框
     else if(requestItem.isShowLoadingView)
     {
-        UIView *superView = requestItem.requestLoadingSuperView ? requestItem.requestLoadingSuperView : [UIApplication sharedApplication].keyWindow;
-        requestLoadingView = [MSSRequestLoadingView showRequestLoadingViewWithSuperView:superView];
+        if(!requestItem.requestLoadingSuperView)
+        {
+            requestItem.requestLoadingSuperView = [UIApplication sharedApplication].keyWindow;
+        }
+        [MSSRequestLoadingView showRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
     }
     [[MSSRequest sharedInstance]uploadFileWithRequestItem:requestItem success:^(id responseObject) {
-        // 隐藏进度条
-        if(requestItem.isShowProgressView)
-        {
-            [progressView hideProgressView];
-        }
-        // 隐藏加载框
-        else if(requestItem.isShowLoadingView)
-        {
-            [requestLoadingView hideRequestLoadingView];
-        }
+        [self hideRequestViewWithRequestItem:requestItem];
         // 请求成功提示弹框
         [self showSuccessAlertViewWithRequestItem:requestItem];
         [_requestItemArray removeObject:requestItem];
@@ -115,16 +105,7 @@
             success(responseObject);
         }
     } fail:^(NSError *error) {
-        // 隐藏进度条
-        if(requestItem.isShowProgressView)
-        {
-            [progressView hideProgressView];
-        }
-        // 隐藏加载框
-        else if(requestItem.isShowLoadingView)
-        {
-            [requestLoadingView hideRequestLoadingView];
-        }
+        [self hideRequestViewWithRequestItem:requestItem];
         // 请求失败提示弹框
         [self showFailAlertViewWithRequestItem:requestItem];
         [_requestItemArray removeObject:requestItem];
@@ -135,10 +116,7 @@
     } progress:^(NSProgress *progress) {
         if(requestItem.isShowProgressView)
         {
-            if(progress.totalUnitCount > 0)
-            {
-                progressView.progress = progress.fractionCompleted;
-            }
+            progressView.progress = progress.fractionCompleted;
         }
     }];
     [_requestItemArray addObject:requestItem];
@@ -154,7 +132,6 @@
         }
     }
 }
-
 // 请求失败提示弹框
 - (void)showFailAlertViewWithRequestItem:(MSSRequestModel *)requestItem
 {
@@ -176,6 +153,7 @@
 #pragma mark Cancel Method
 - (void)cancelWithRequestItem:(MSSRequestModel *)requestItem
 {
+    [self hideRequestViewWithRequestItem:requestItem];
     [requestItem.task cancel];
     [_requestItemArray removeObject:requestItem];
 }
@@ -184,16 +162,33 @@
 {
     for (MSSRequestModel *requestItem in _requestItemArray)
     {
+        [self hideRequestViewWithRequestItem:requestItem];
         [requestItem.task cancel];
     }
     [_requestItemArray removeAllObjects];
 }
 
+- (void)hideRequestViewWithRequestItem:(MSSRequestModel *)requestItem
+{
+    // 隐藏进度条
+    if(requestItem.isShowProgressView)
+    {
+        [MSSProgressView hideProgressViewWithSuperView:requestItem.requestProgressSuperView];
+    }
+    // 隐藏加载框
+    else if(requestItem.isShowLoadingView)
+    {
+        [MSSRequestLoadingView hideRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
+    }
+}
+
 #pragma mark BatchRequest Method
 // 批量上传图片
-- (void)uploadBatchFileWithRequestItemArray:(NSArray *)requestItemArray success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail finish:(MSSBatchRequestFinish)finish
+- (void)uploadBatchFileWithRequestItemArray:(NSArray *)requestItemArray success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail finish:(MSSBatchRequestFinishBlock)finish
 {
-    [self.batchRequest uploadBatchFileWithRequestItemArray:requestItemArray success:^(id responseObject) {
+    MSSProgressView *progressView = [MSSProgressView showProgressViewWithSuperView:[UIApplication sharedApplication].keyWindow];
+    [self.batchRequest uploadBatchFileWithRequestItemArray:requestItemArray success:^(id responseObject,NSInteger successCount) {
+        progressView.fileCountText = [NSString stringWithFormat:@"%ld",self.batchRequest.successCount];
         if(success)
         {
             success(responseObject);
@@ -204,10 +199,13 @@
             fail(error);
         }
     } finish:^(NSInteger failCount) {
-       if(finish)
-       {
-           finish(failCount);
-       }
+        [progressView hideProgressView];
+        if(finish)
+        {
+            finish(failCount);
+        }
+    } progress:^(CGFloat progress) {
+        progressView.progress = progress;
     }];
 }
 

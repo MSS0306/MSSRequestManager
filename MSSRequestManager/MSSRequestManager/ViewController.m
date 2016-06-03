@@ -9,8 +9,7 @@
 #import "ViewController.h"
 #import "MSSRequestManagerDefine.h"
 #import "AFURLSessionManager.h"
-#import "MSSProgressView.h"
-
+#import "MSSAlertView.h"
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -98,12 +97,12 @@
     {
         NSMutableArray *batchRequestArray = [[NSMutableArray alloc]init];
         int i = 0;
-        for(i = 0;i < 10;i++)
+        for(i = 0;i < 151;i++)
         {
             MSSRequestModel *requestItem = [[MSSRequestModel alloc]init];
             requestItem.requestPath = @"Public/Member/UpdateHead";
             requestItem.params = @{@"seller_id":@"49",@"user_id":@"1076",@"sid":[NSString stringWithFormat:@"%@",_sid]};
-            NSString *path = [[NSBundle mainBundle]pathForResource:@"testtest" ofType:@"jpg"];
+            NSString *path = [[NSBundle mainBundle]pathForResource:@"browse09" ofType:@"jpg"];
             NSData *data = [[NSData alloc]initWithContentsOfFile:path];
             requestItem.uploadName = @"head";
             requestItem.uploadFileName = @"1234567.jpg";
@@ -116,7 +115,14 @@
         } fail:^(NSError *error) {
             NSLog(@"失败");
         } finish:^(NSInteger failCount) {
-            NSLog(@"failCount->%ld",(long)failCount);
+            if(failCount == 0)
+            {
+                [MSSAlertView showAlertViewWithText:@"全部图片上传成功" delay:1.0f];
+            }
+            else
+            {
+                [MSSAlertView showAlertViewWithText:[NSString stringWithFormat:@"%ld个图片上传失败",(long)failCount] delay:1.0];
+            }
         }];
     }
 }

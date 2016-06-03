@@ -49,7 +49,7 @@
  *  @param success            请求成功回调
  *  @param fail               请求失败回调
  */
-- (void)uploadBatchFileWithRequestItemArray:(NSArray *)requestItemArray success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail finish:(MSSBatchRequestFinish)finish;
+- (void)uploadBatchFileWithRequestItemArray:(NSArray *)requestItemArray success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail finish:(MSSBatchRequestFinishBlock)finish;
 /**
  *  取消批量上传全部请求
  */

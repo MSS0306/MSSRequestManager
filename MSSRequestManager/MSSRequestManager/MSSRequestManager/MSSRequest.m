@@ -95,10 +95,13 @@
     {
         task = [_sessionManager POST:requestItem.requestUrl parameters:requestItem.params constructingBodyWithBlock:requestItem.AFMultipartFormDataBlock progress:^(NSProgress * _Nonnull uploadProgress) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                if(progress)
+                if(uploadProgress.totalUnitCount > 0)
                 {
-                    progress(uploadProgress);
-                }
+                    if(progress)
+                    {
+                        progress(uploadProgress);
+                    }
+                };
             });
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if(success)
@@ -133,6 +136,42 @@
             }
         }];
     }
+    if(task)
+    {
+        requestItem.task = task;
+    }
+}
+
+// 根据request上传文件
+- (void)uploadFileWithRequest:(NSURLRequest *)request requestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail progress:(MSSRequestProgressBlock)progress
+{
+    NSURLSessionTask *task = [_sessionManager uploadTaskWithStreamedRequest:request progress:^(NSProgress * _Nonnull uploadProgress) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(uploadProgress.totalUnitCount > 0)
+            {
+                if(progress)
+                {
+                    progress(uploadProgress);
+                }
+            };
+        });
+    } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        if(error)
+        {
+            if(fail)
+            {
+                fail(error);
+            }
+        }
+        else
+        {
+            if(success)
+            {
+                success(responseObject);
+            }
+        }
+    }];
+    [task resume];
     if(task)
     {
         requestItem.task = task;
