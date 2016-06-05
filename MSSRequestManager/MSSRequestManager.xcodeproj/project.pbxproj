@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40D8C5901D03F26B000F7554 /* browse09.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 40D8C58F1D03F26B000F7554 /* browse09.jpg */; };
 		40D8D7721CDF25DD002EE8E5 /* testtest.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 40D8D7711CDF25DD002EE8E5 /* testtest.jpg */; };
 		40D8D7751CDF2B63002EE8E5 /* MSSBatchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D8D7741CDF2B63002EE8E5 /* MSSBatchRequest.m */; };
 		40D8D7781CDF2B84002EE8E5 /* MSSBatchRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D8D7771CDF2B84002EE8E5 /* MSSBatchRequestOperation.m */; };
@@ -31,10 +32,10 @@
 		69DE1FB11CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69DE1FAF1CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png */; };
 		69DE2C201CFEC944009CC00D /* MSSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DE2C1F1CFEC944009CC00D /* MSSAlertView.m */; };
 		69DE2C231CFF0BCF009CC00D /* MSSProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DE2C221CFF0BCF009CC00D /* MSSProgressView.m */; };
-		69F2D2C81D002DD200ED84B5 /* browse09.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 69F2D2C71D002DD200ED84B5 /* browse09.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		40D8C58F1D03F26B000F7554 /* browse09.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = browse09.jpg; sourceTree = "<group>"; };
 		40D8D7711CDF25DD002EE8E5 /* testtest.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testtest.jpg; sourceTree = "<group>"; };
 		40D8D7731CDF2B63002EE8E5 /* MSSBatchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSBatchRequest.h; sourceTree = "<group>"; };
 		40D8D7741CDF2B63002EE8E5 /* MSSBatchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSBatchRequest.m; sourceTree = "<group>"; };
@@ -80,7 +81,6 @@
 		69DE2C1F1CFEC944009CC00D /* MSSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSAlertView.m; sourceTree = "<group>"; };
 		69DE2C211CFF0BCF009CC00D /* MSSProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSProgressView.h; sourceTree = "<group>"; };
 		69DE2C221CFF0BCF009CC00D /* MSSProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSProgressView.m; sourceTree = "<group>"; };
-		69F2D2C71D002DD200ED84B5 /* browse09.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = browse09.jpg; path = ../../../browse09.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,8 +119,8 @@
 				40D934DB1CDDAB250057E384 /* AppDelegate.m */,
 				40D934DD1CDDAB250057E384 /* ViewController.h */,
 				40D934DE1CDDAB250057E384 /* ViewController.m */,
+				40D8C58F1D03F26B000F7554 /* browse09.jpg */,
 				40D8D7711CDF25DD002EE8E5 /* testtest.jpg */,
-				69F2D2C71D002DD200ED84B5 /* browse09.jpg */,
 				40D934E01CDDAB250057E384 /* Main.storyboard */,
 				40D934E31CDDAB250057E384 /* Assets.xcassets */,
 				40D934E51CDDAB250057E384 /* LaunchScreen.storyboard */,
@@ -244,7 +244,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69F2D2C81D002DD200ED84B5 /* browse09.jpg in Resources */,
+				40D8C5901D03F26B000F7554 /* browse09.jpg in Resources */,
 				40D934E71CDDAB250057E384 /* LaunchScreen.storyboard in Resources */,
 				40D934E41CDDAB250057E384 /* Assets.xcassets in Resources */,
 				69DE1FB11CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png in Resources */,
