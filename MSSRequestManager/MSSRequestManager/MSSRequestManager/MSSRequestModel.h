@@ -30,6 +30,12 @@ typedef NS_ENUM(NSInteger,MSSRequestModelType)
     MSSRequestModelPostType
 };
 
+typedef NS_ENUM(NSInteger,MSSRequestLoadingType)
+{
+    MSSRequestCircleType = 0,// 转圈类型
+    MSSRequestProgressType = 1// 进度条类型
+};
+
 @interface MSSRequestModel : NSObject
 
 /*
@@ -68,11 +74,9 @@ typedef NS_ENUM(NSInteger,MSSRequestModelType)
 /// 是否显示加载框
 @property (nonatomic,assign)BOOL isShowLoadingView;
 /// 设置加载框父视图（默认加在window上）
-@property (nonatomic,strong)UIView *requestLoadingSuperView;
-/// 上传文件时是否显示进度条
-@property (nonatomic,assign)BOOL isShowProgressView;
-/// 设置进度父视图（默认加在window上）
-@property (nonatomic,strong)UIView *requestProgressSuperView;
+@property (nonatomic,strong)UIView *loadingSuperView;
+/// 加载框类型
+@property (nonatomic,assign)MSSRequestLoadingType loadingType;
 /// 请求成功是否弹出提示框（默认关闭提示）
 @property (nonatomic,assign)BOOL isShowSussessAlertView;
 /// 请求成功弹出提示框内容

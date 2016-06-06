@@ -27,11 +27,16 @@
 		40D935081CDE0AD80057E384 /* MSSRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D935071CDE0AD80057E384 /* MSSRequest.m */; };
 		40D9350D1CDE0CA30057E384 /* MSSRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D9350A1CDE0CA30057E384 /* MSSRequestModel.m */; };
 		690A24331CE0368500EB7C2F /* MSSRequestCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 690A24321CE0368500EB7C2F /* MSSRequestCache.m */; };
-		69DE1FA91CE9C464005C3FBB /* MSSRequestLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DE1FA81CE9C464005C3FBB /* MSSRequestLoadingView.m */; };
-		69DE1FB01CE9CA28005C3FBB /* MSSRequestLoadingImageView@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69DE1FAE1CE9CA28005C3FBB /* MSSRequestLoadingImageView@3x.png */; };
-		69DE1FB11CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69DE1FAF1CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png */; };
-		69DE2C201CFEC944009CC00D /* MSSAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DE2C1F1CFEC944009CC00D /* MSSAlertView.m */; };
-		69DE2C231CFF0BCF009CC00D /* MSSProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DE2C221CFF0BCF009CC00D /* MSSProgressView.m */; };
+		69ECDCDE1D05135D003A5AEC /* MSSBasePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69ECDCDD1D05135D003A5AEC /* MSSBasePopView.m */; };
+		69ECDCE71D053CA8003A5AEC /* MSSAlertPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69ECDCE61D053CA8003A5AEC /* MSSAlertPopView.m */; };
+		69ECDCEA1D054128003A5AEC /* MSSProgressPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69ECDCE91D054128003A5AEC /* MSSProgressPopView.m */; };
+		69ECDCED1D0549AC003A5AEC /* MSSCirclePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69ECDCEC1D0549AC003A5AEC /* MSSCirclePopView.m */; };
+		69ECDCF51D056BA7003A5AEC /* requestManagerSuccess@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69ECDCF11D056BA7003A5AEC /* requestManagerSuccess@3x.png */; };
+		69ECDCF61D056BA7003A5AEC /* requestManagerSuccess@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69ECDCF21D056BA7003A5AEC /* requestManagerSuccess@2x.png */; };
+		69ECDCF71D056BA7003A5AEC /* requestManagerFail@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69ECDCF31D056BA7003A5AEC /* requestManagerFail@3x.png */; };
+		69ECDCF81D056BA7003A5AEC /* requestManagerFail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69ECDCF41D056BA7003A5AEC /* requestManagerFail@2x.png */; };
+		69ECDCFB1D057A04003A5AEC /* requestManagerCircleImageView@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69ECDCF91D057A04003A5AEC /* requestManagerCircleImageView@3x.png */; };
+		69ECDCFC1D057A04003A5AEC /* requestManagerCircleImageView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69ECDCFA1D057A04003A5AEC /* requestManagerCircleImageView@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,14 +78,20 @@
 		40D9350F1CDE146A0057E384 /* MSSRequestManagerDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSSRequestManagerDefine.h; sourceTree = "<group>"; };
 		690A24311CE0368500EB7C2F /* MSSRequestCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSRequestCache.h; sourceTree = "<group>"; };
 		690A24321CE0368500EB7C2F /* MSSRequestCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSRequestCache.m; sourceTree = "<group>"; };
-		69DE1FA71CE9C464005C3FBB /* MSSRequestLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSRequestLoadingView.h; sourceTree = "<group>"; };
-		69DE1FA81CE9C464005C3FBB /* MSSRequestLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSRequestLoadingView.m; sourceTree = "<group>"; };
-		69DE1FAE1CE9CA28005C3FBB /* MSSRequestLoadingImageView@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MSSRequestLoadingImageView@3x.png"; sourceTree = "<group>"; };
-		69DE1FAF1CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MSSRequestLoadingImageView@2x.png"; sourceTree = "<group>"; };
-		69DE2C1E1CFEC944009CC00D /* MSSAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSAlertView.h; sourceTree = "<group>"; };
-		69DE2C1F1CFEC944009CC00D /* MSSAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSAlertView.m; sourceTree = "<group>"; };
-		69DE2C211CFF0BCF009CC00D /* MSSProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSProgressView.h; sourceTree = "<group>"; };
-		69DE2C221CFF0BCF009CC00D /* MSSProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSProgressView.m; sourceTree = "<group>"; };
+		69ECDCDC1D05135D003A5AEC /* MSSBasePopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSBasePopView.h; sourceTree = "<group>"; };
+		69ECDCDD1D05135D003A5AEC /* MSSBasePopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSBasePopView.m; sourceTree = "<group>"; };
+		69ECDCE51D053CA8003A5AEC /* MSSAlertPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSAlertPopView.h; sourceTree = "<group>"; };
+		69ECDCE61D053CA8003A5AEC /* MSSAlertPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSAlertPopView.m; sourceTree = "<group>"; };
+		69ECDCE81D054128003A5AEC /* MSSProgressPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSProgressPopView.h; sourceTree = "<group>"; };
+		69ECDCE91D054128003A5AEC /* MSSProgressPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSProgressPopView.m; sourceTree = "<group>"; };
+		69ECDCEB1D0549AC003A5AEC /* MSSCirclePopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSCirclePopView.h; sourceTree = "<group>"; };
+		69ECDCEC1D0549AC003A5AEC /* MSSCirclePopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSCirclePopView.m; sourceTree = "<group>"; };
+		69ECDCF11D056BA7003A5AEC /* requestManagerSuccess@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requestManagerSuccess@3x.png"; sourceTree = "<group>"; };
+		69ECDCF21D056BA7003A5AEC /* requestManagerSuccess@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requestManagerSuccess@2x.png"; sourceTree = "<group>"; };
+		69ECDCF31D056BA7003A5AEC /* requestManagerFail@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requestManagerFail@3x.png"; sourceTree = "<group>"; };
+		69ECDCF41D056BA7003A5AEC /* requestManagerFail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requestManagerFail@2x.png"; sourceTree = "<group>"; };
+		69ECDCF91D057A04003A5AEC /* requestManagerCircleImageView@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requestManagerCircleImageView@3x.png"; sourceTree = "<group>"; };
+		69ECDCFA1D057A04003A5AEC /* requestManagerCircleImageView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "requestManagerCircleImageView@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +152,7 @@
 		40D934EE1CDDC9AA0057E384 /* MSSRequestManager */ = {
 			isa = PBXGroup;
 			children = (
+				69ECDCDB1D05135D003A5AEC /* MSSPopViews */,
 				40D9350F1CDE146A0057E384 /* MSSRequestManagerDefine.h */,
 				40D934EF1CDDC9BC0057E384 /* MSSRequestManager.h */,
 				40D934F01CDDC9BC0057E384 /* MSSRequestManager.m */,
@@ -154,14 +166,6 @@
 				40D9350A1CDE0CA30057E384 /* MSSRequestModel.m */,
 				690A24311CE0368500EB7C2F /* MSSRequestCache.h */,
 				690A24321CE0368500EB7C2F /* MSSRequestCache.m */,
-				69DE1FA71CE9C464005C3FBB /* MSSRequestLoadingView.h */,
-				69DE1FA81CE9C464005C3FBB /* MSSRequestLoadingView.m */,
-				69DE2C1E1CFEC944009CC00D /* MSSAlertView.h */,
-				69DE2C1F1CFEC944009CC00D /* MSSAlertView.m */,
-				69DE2C211CFF0BCF009CC00D /* MSSProgressView.h */,
-				69DE2C221CFF0BCF009CC00D /* MSSProgressView.m */,
-				69DE1FAF1CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png */,
-				69DE1FAE1CE9CA28005C3FBB /* MSSRequestLoadingImageView@3x.png */,
 			);
 			path = MSSRequestManager;
 			sourceTree = "<group>";
@@ -184,6 +188,27 @@
 				40D934FF1CDDF5920057E384 /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		69ECDCDB1D05135D003A5AEC /* MSSPopViews */ = {
+			isa = PBXGroup;
+			children = (
+				69ECDCDC1D05135D003A5AEC /* MSSBasePopView.h */,
+				69ECDCDD1D05135D003A5AEC /* MSSBasePopView.m */,
+				69ECDCE51D053CA8003A5AEC /* MSSAlertPopView.h */,
+				69ECDCE61D053CA8003A5AEC /* MSSAlertPopView.m */,
+				69ECDCEB1D0549AC003A5AEC /* MSSCirclePopView.h */,
+				69ECDCEC1D0549AC003A5AEC /* MSSCirclePopView.m */,
+				69ECDCE81D054128003A5AEC /* MSSProgressPopView.h */,
+				69ECDCE91D054128003A5AEC /* MSSProgressPopView.m */,
+				69ECDCF11D056BA7003A5AEC /* requestManagerSuccess@3x.png */,
+				69ECDCF21D056BA7003A5AEC /* requestManagerSuccess@2x.png */,
+				69ECDCF31D056BA7003A5AEC /* requestManagerFail@3x.png */,
+				69ECDCF41D056BA7003A5AEC /* requestManagerFail@2x.png */,
+				69ECDCFA1D057A04003A5AEC /* requestManagerCircleImageView@2x.png */,
+				69ECDCF91D057A04003A5AEC /* requestManagerCircleImageView@3x.png */,
+			);
+			path = MSSPopViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,13 +269,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69ECDCFB1D057A04003A5AEC /* requestManagerCircleImageView@3x.png in Resources */,
 				40D8C5901D03F26B000F7554 /* browse09.jpg in Resources */,
 				40D934E71CDDAB250057E384 /* LaunchScreen.storyboard in Resources */,
 				40D934E41CDDAB250057E384 /* Assets.xcassets in Resources */,
-				69DE1FB11CE9CA28005C3FBB /* MSSRequestLoadingImageView@2x.png in Resources */,
+				69ECDCF81D056BA7003A5AEC /* requestManagerFail@2x.png in Resources */,
+				69ECDCF71D056BA7003A5AEC /* requestManagerFail@3x.png in Resources */,
 				40D934E21CDDAB250057E384 /* Main.storyboard in Resources */,
-				69DE1FB01CE9CA28005C3FBB /* MSSRequestLoadingImageView@3x.png in Resources */,
 				40D8D7721CDF25DD002EE8E5 /* testtest.jpg in Resources */,
+				69ECDCF51D056BA7003A5AEC /* requestManagerSuccess@3x.png in Resources */,
+				69ECDCF61D056BA7003A5AEC /* requestManagerSuccess@2x.png in Resources */,
+				69ECDCFC1D057A04003A5AEC /* requestManagerCircleImageView@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,19 +293,20 @@
 				690A24331CE0368500EB7C2F /* MSSRequestCache.m in Sources */,
 				40D935021CDDF5920057E384 /* AFSecurityPolicy.m in Sources */,
 				40D935041CDDF5920057E384 /* AFURLResponseSerialization.m in Sources */,
+				69ECDCED1D0549AC003A5AEC /* MSSCirclePopView.m in Sources */,
 				40D8D7751CDF2B63002EE8E5 /* MSSBatchRequest.m in Sources */,
-				69DE2C201CFEC944009CC00D /* MSSAlertView.m in Sources */,
 				40D934DF1CDDAB250057E384 /* ViewController.m in Sources */,
 				40D935081CDE0AD80057E384 /* MSSRequest.m in Sources */,
 				40D934F11CDDC9BC0057E384 /* MSSRequestManager.m in Sources */,
-				69DE1FA91CE9C464005C3FBB /* MSSRequestLoadingView.m in Sources */,
 				40D935001CDDF5920057E384 /* AFHTTPSessionManager.m in Sources */,
+				69ECDCE71D053CA8003A5AEC /* MSSAlertPopView.m in Sources */,
+				69ECDCEA1D054128003A5AEC /* MSSProgressPopView.m in Sources */,
 				40D935051CDDF5920057E384 /* AFURLSessionManager.m in Sources */,
-				69DE2C231CFF0BCF009CC00D /* MSSProgressView.m in Sources */,
 				40D934DC1CDDAB250057E384 /* AppDelegate.m in Sources */,
 				40D935011CDDF5920057E384 /* AFNetworkReachabilityManager.m in Sources */,
 				40D8D7781CDF2B84002EE8E5 /* MSSBatchRequestOperation.m in Sources */,
 				40D9350D1CDE0CA30057E384 /* MSSRequestModel.m in Sources */,
+				69ECDCDE1D05135D003A5AEC /* MSSBasePopView.m in Sources */,
 				40D934D91CDDAB250057E384 /* main.m in Sources */,
 				40D935031CDDF5920057E384 /* AFURLRequestSerialization.m in Sources */,
 			);

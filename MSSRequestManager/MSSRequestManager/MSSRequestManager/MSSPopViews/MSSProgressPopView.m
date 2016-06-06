@@ -1,59 +1,38 @@
 //
-//  MSSProgressView.m
+//  MSSProgressPopView.m
 //  MSSRequestManager
 //
-//  Created by 于威 on 16/6/1.
+//  Created by 于威 on 16/6/6.
 //  Copyright © 2016年 于威. All rights reserved.
 //
 
 
-#import "MSSProgressView.h"
+#import "MSSProgressPopView.h"
 
 static const CGFloat drawLineWith = 5.0f;
 
-@interface MSSProgressView ()
+@interface MSSProgressPopView ()
 
 @property (nonatomic,strong)UIView *progressView;
 @property (nonatomic,strong)CAShapeLayer *progressLayer;
-@property (nonatomic,strong)UILabel *progressLabel;
+@property (nonatomic,strong)UILabel *progressLabel;// 上传进度百分比
 @property (nonatomic,strong)UILabel *fileCountLabel;// 文件上传成功个数
 
 @end
 
-@implementation MSSProgressView
+@implementation MSSProgressPopView
 
-+ (MSSProgressView *)showProgressViewWithSuperView:(UIView *)superView
+- (instancetype)initWithSuperView:(UIView *)superView
 {
-    MSSProgressView *progressView = [[MSSProgressView alloc]initWithFrame:superView.bounds];
-    progressView.backgroundColor = [UIColor clearColor];
-    [superView addSubview:progressView];
-    return progressView;
-}
-
-+ (void)hideProgressViewWithSuperView:(UIView *)superView
-{
-    for (UIView *subView in superView.subviews)
+    self = [super initWithSuperView:superView];
+    if(self)
     {
-        if([subView isKindOfClass:[MSSProgressView class]])
-        {
-            MSSProgressView *progressView = (MSSProgressView *)subView;
-            [progressView hideProgressView];
-            break;
-        }
-    }
-}
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-        [self createProgressView];
+        [self createUI];
     }
     return self;
 }
 
-- (void)createProgressView
+- (void)createUI
 {
     // 进度条
     _progressView = [[UIView alloc]initWithFrame:CGRectMake((self.frame.size.width - 80) / 2, (self.frame.size.height - 80) / 2, 80, 80)];
@@ -106,11 +85,6 @@ static const CGFloat drawLineWith = 5.0f;
     }
 }
 
-- (void)hideProgressView
-{
-    [self removeFromSuperview];
-}
-
 - (void)setFileCountText:(NSString *)fileCountText
 {
     _fileCountText = fileCountText;
@@ -127,5 +101,3 @@ static const CGFloat drawLineWith = 5.0f;
 }
 
 @end
-
-

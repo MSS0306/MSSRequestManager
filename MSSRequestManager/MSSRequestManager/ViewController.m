@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "MSSRequestManagerDefine.h"
 #import "AFURLSessionManager.h"
-#import "MSSAlertView.h"
+#import "MSSAlertPopView.h"
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -61,6 +61,7 @@
         requestItem.cacheSecond = 30.0f;
         requestItem.cacheFolderName = @"Login";
         requestItem.isShowLoadingView = YES;
+        requestItem.loadingType = MSSRequestProgressType;
         [[MSSRequestManager sharedInstance]startWithRequestItem:requestItem success:^(id responseObject) {
             _sid = responseObject[@"content"][@"sid"];
         } fail:^(NSError *error) {
@@ -72,9 +73,9 @@
         MSSRequestModel *requestItem = [[MSSRequestModel alloc]init];
         requestItem.requestPath = @"Public/Member/UpdateHead";
         requestItem.params = @{@"seller_id":@"49",@"user_id":@"1076",@"sid":[NSString stringWithFormat:@"%@",_sid]};
-        requestItem.requestLoadingSuperView = self.view;
+        requestItem.loadingSuperView = self.view;
+        requestItem.loadingType = MSSRequestProgressType;
         requestItem.failAlertText = @"上传头像失败";
-        requestItem.isShowProgressView = YES;
         requestItem.isShowSussessAlertView = YES;
         requestItem.successAlertText = @"上传成功";
         //    requestItem.uploadName = @"head";
@@ -97,7 +98,7 @@
     {
         NSMutableArray *batchRequestArray = [[NSMutableArray alloc]init];
         int i = 0;
-        for(i = 0;i < 151;i++)
+        for(i = 0;i < 21;i++)
         {
             MSSRequestModel *requestItem = [[MSSRequestModel alloc]init];
             requestItem.requestPath = @"Public/Member/UpdateHead";
@@ -117,11 +118,12 @@
         } finish:^(NSInteger failCount) {
             if(failCount == 0)
             {
-                [MSSAlertView showAlertViewWithText:@"全部图片上传成功" delay:1.0f];
+                [MSSAlertPopView showSuccessAlertPopViewWithAlertText:@"全部图片上传成功"];
             }
             else
             {
-                [MSSAlertView showAlertViewWithText:[NSString stringWithFormat:@"%ld个图片上传失败",(long)failCount] delay:1.0];
+                MSSAlertPopView *alertView = [[MSSAlertPopView alloc]initWithAlertText:[NSString stringWithFormat:@"%ld个图片上传失败",failCount] superView:self.view];
+                [alertView showPopViewWithShowTime:1.0 completion:nil];
             }
         }];
     }

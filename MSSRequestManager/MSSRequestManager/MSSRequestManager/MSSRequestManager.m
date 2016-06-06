@@ -7,9 +7,10 @@
 //
 
 #import "MSSRequestManager.h"
-#import "MSSRequestLoadingView.h"
-#import "MSSAlertView.h"
-#import "MSSProgressView.h"
+#import "MSSCirclePopView.h"
+#import "MSSAlertPopView.h"
+#import "MSSProgressPopView.h"
+#import "MSSBasePopView.h"
 
 @interface MSSRequestManager ()
 
@@ -42,20 +43,18 @@
 
 - (void)startWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail
 {
+    MSSBasePopView *loadingView = nil;
     // 显示加载框
     if(requestItem.isShowLoadingView)
     {
-        if(!requestItem.requestLoadingSuperView)
-        {
-            requestItem.requestLoadingSuperView = [UIApplication sharedApplication].keyWindow;
-        }
-        [MSSRequestLoadingView showRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
+        loadingView = [self showPopViewWithRequestItem:requestItem];
     }
 
     [[MSSRequest sharedInstance]startWithRequestItem:requestItem success:^(id responseObject) {
         [self hideRequestViewWithRequestItem:requestItem];
         // 请求成功提示弹框
         [self showSuccessAlertViewWithRequestItem:requestItem];
+
         [_requestItemArray removeObject:requestItem];
         if(success)
         {
@@ -70,30 +69,23 @@
         {
             fail(error);
         }
+    }progress:^(NSProgress *progress) {
+        if(requestItem.isShowLoadingView && requestItem.loadingType == MSSRequestProgressType)
+        {
+            MSSProgressPopView *progressPopView = (MSSProgressPopView *)loadingView;
+            progressPopView.progress = progress.fractionCompleted;
+        }
     }];
     [_requestItemArray addObject:requestItem];
 }
 
 - (void)uploadFileWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail
 {
-    MSSProgressView *progressView = nil;
-    // 显示进度条
-    if(requestItem.isShowProgressView)
-    {
-        if(!requestItem.requestProgressSuperView)
-        {
-            requestItem.requestProgressSuperView = [UIApplication sharedApplication].keyWindow;
-        }
-        progressView = [MSSProgressView showProgressViewWithSuperView:requestItem.requestProgressSuperView];
-    }
+    MSSBasePopView *loadingView = nil;
     // 显示加载框
-    else if(requestItem.isShowLoadingView)
+    if(requestItem.isShowLoadingView)
     {
-        if(!requestItem.requestLoadingSuperView)
-        {
-            requestItem.requestLoadingSuperView = [UIApplication sharedApplication].keyWindow;
-        }
-        [MSSRequestLoadingView showRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
+        loadingView = [self showPopViewWithRequestItem:requestItem];
     }
     [[MSSRequest sharedInstance]uploadFileWithRequestItem:requestItem success:^(id responseObject) {
         [self hideRequestViewWithRequestItem:requestItem];
@@ -114,13 +106,34 @@
             fail(error);
         }
     } progress:^(NSProgress *progress) {
-        if(requestItem.isShowProgressView)
+        if(requestItem.isShowLoadingView && requestItem.loadingType == MSSRequestProgressType)
         {
-            progressView.progress = progress.fractionCompleted;
+            MSSProgressPopView *progressPopView = (MSSProgressPopView *)loadingView;
+            progressPopView.progress = progress.fractionCompleted;
         }
     }];
     [_requestItemArray addObject:requestItem];
 }
+
+- (MSSBasePopView *)showPopViewWithRequestItem:(MSSRequestModel *)requestItem
+{
+    MSSBasePopView *popView = nil;
+    if(!requestItem.loadingSuperView)
+    {
+        requestItem.loadingSuperView = [UIApplication sharedApplication].keyWindow;
+    }
+    if(requestItem.loadingType == MSSRequestCircleType)
+    {
+        popView = [[MSSCirclePopView alloc]initWithSuperView:requestItem.loadingSuperView];
+    }
+    else
+    {
+        popView = [[MSSProgressPopView alloc]initWithSuperView:requestItem.loadingSuperView];
+    }
+    [popView showPopView];
+    return popView;
+}
+
 // 请求成功提示弹框
 - (void)showSuccessAlertViewWithRequestItem:(MSSRequestModel *)requestItem
 {
@@ -128,7 +141,7 @@
     {
         if(requestItem.successAlertText)
         {
-            [MSSAlertView showAlertViewWithText:requestItem.successAlertText delay:1.0f];
+            [MSSAlertPopView showSuccessAlertPopViewWithAlertText:requestItem.successAlertText];
         }
     }
 }
@@ -146,7 +159,7 @@
         {
             alertText = @"网络异常";
         }
-        [MSSAlertView showAlertViewWithText:alertText delay:1.0f];
+        [MSSAlertPopView showFailAlertPopViewWithAlertText:alertText];
     }
 }
 
@@ -170,23 +183,14 @@
 
 - (void)hideRequestViewWithRequestItem:(MSSRequestModel *)requestItem
 {
-    // 隐藏进度条
-    if(requestItem.isShowProgressView)
-    {
-        [MSSProgressView hideProgressViewWithSuperView:requestItem.requestProgressSuperView];
-    }
-    // 隐藏加载框
-    else if(requestItem.isShowLoadingView)
-    {
-        [MSSRequestLoadingView hideRequestLoadingViewWithSuperView:requestItem.requestLoadingSuperView];
-    }
+    [MSSBasePopView hidePopViewWithSuperView:requestItem.loadingSuperView];
 }
 
 #pragma mark BatchRequest Method
 // 批量上传图片
 - (void)uploadBatchFileWithRequestItemArray:(NSArray *)requestItemArray success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail finish:(MSSBatchRequestFinishBlock)finish
 {
-    MSSProgressView *progressView = [MSSProgressView showProgressViewWithSuperView:[UIApplication sharedApplication].keyWindow];
+    MSSProgressPopView *progressView = (MSSProgressPopView *)[MSSProgressPopView showPopView];
     [self.batchRequest uploadBatchFileWithRequestItemArray:requestItemArray success:^(id responseObject,NSInteger successCount) {
         progressView.fileCountText = [NSString stringWithFormat:@"%ld",self.batchRequest.successCount];
         if(success)
@@ -199,7 +203,7 @@
             fail(error);
         }
     } finish:^(NSInteger failCount) {
-        [progressView hideProgressView];
+        [progressView hidePopViewWithCompletion:nil];
         if(finish)
         {
             finish(failCount);

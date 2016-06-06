@@ -21,10 +21,9 @@
         _cachePolicy = MSSRequestDefaultCachePolicy;
         _timeInterval = 60.0f;
         _baseUrl = @"http://v2.toys178.com/Api/";
-        _isShowLoadingView = NO;
+        _isShowLoadingView = YES;
         _isShowFailAlertView = YES;
         _isShowSussessAlertView = NO;
-        _isShowProgressView = NO;
     }
     return self;
 }

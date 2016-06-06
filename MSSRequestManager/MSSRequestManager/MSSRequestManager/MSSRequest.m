@@ -41,7 +41,7 @@
 }
 
 // 普通Get,Post请求
-- (void)startWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail
+- (void)startWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail progress:(MSSRequestProgressBlock)progress
 {
     if(requestItem.cachePolicy == MSSRequestUseLocalCachePolicy)
     {
@@ -63,7 +63,15 @@
     if(requestItem.requestType == MSSRequestModelGetType)
     {
         task = [_sessionManager GET:requestItem.requestUrl parameters:requestItem.params progress:^(NSProgress * _Nonnull downloadProgress) {
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if(downloadProgress.totalUnitCount > 0)
+                {
+                    if(progress)
+                    {
+                        progress(downloadProgress);
+                    }
+                };
+            });
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [self requestSuccessWithRequestItem:requestItem responseObject:responseObject success:success];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -73,7 +81,15 @@
     else
     {
         task = [_sessionManager POST:requestItem.requestUrl parameters:requestItem.params progress:^(NSProgress * _Nonnull uploadProgress) {
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if(uploadProgress.totalUnitCount > 0)
+                {
+                    if(progress)
+                    {
+                        progress(uploadProgress);
+                    }
+                };
+            });
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             [self requestSuccessWithRequestItem:requestItem responseObject:responseObject success:success];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

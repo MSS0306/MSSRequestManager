@@ -22,8 +22,9 @@ typedef void(^MSSRequestProgressBlock)(NSProgress *progress);
  *  @param requestItem 请求参数数据对象
  *  @param success     请求成功回调
  *  @param fail        请求失败回调
+ *  @param progress    进度条回调
  */
-- (void)startWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail;
+- (void)startWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail progress:(MSSRequestProgressBlock)progress;
 /**
  *  发起一个上传文件请求
  *
