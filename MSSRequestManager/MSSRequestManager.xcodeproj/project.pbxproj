@@ -26,6 +26,7 @@
 		40D935051CDDF5920057E384 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D934FF1CDDF5920057E384 /* AFURLSessionManager.m */; };
 		40D935081CDE0AD80057E384 /* MSSRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D935071CDE0AD80057E384 /* MSSRequest.m */; };
 		40D9350D1CDE0CA30057E384 /* MSSRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D9350A1CDE0CA30057E384 /* MSSRequestModel.m */; };
+		40DB70C11D09BAAC00C83A24 /* MSSEdgeInsetsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DB70C01D09BAAC00C83A24 /* MSSEdgeInsetsLabel.m */; };
 		690A24331CE0368500EB7C2F /* MSSRequestCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 690A24321CE0368500EB7C2F /* MSSRequestCache.m */; };
 		69ECDCDE1D05135D003A5AEC /* MSSBasePopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69ECDCDD1D05135D003A5AEC /* MSSBasePopView.m */; };
 		69ECDCE71D053CA8003A5AEC /* MSSAlertPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69ECDCE61D053CA8003A5AEC /* MSSAlertPopView.m */; };
@@ -76,6 +77,8 @@
 		40D935091CDE0CA30057E384 /* MSSRequestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSRequestModel.h; sourceTree = "<group>"; };
 		40D9350A1CDE0CA30057E384 /* MSSRequestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSRequestModel.m; sourceTree = "<group>"; };
 		40D9350F1CDE146A0057E384 /* MSSRequestManagerDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSSRequestManagerDefine.h; sourceTree = "<group>"; };
+		40DB70BF1D09BAAC00C83A24 /* MSSEdgeInsetsLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSEdgeInsetsLabel.h; sourceTree = "<group>"; };
+		40DB70C01D09BAAC00C83A24 /* MSSEdgeInsetsLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSEdgeInsetsLabel.m; sourceTree = "<group>"; };
 		690A24311CE0368500EB7C2F /* MSSRequestCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSRequestCache.h; sourceTree = "<group>"; };
 		690A24321CE0368500EB7C2F /* MSSRequestCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSRequestCache.m; sourceTree = "<group>"; };
 		69ECDCDC1D05135D003A5AEC /* MSSBasePopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSBasePopView.h; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 				69ECDCDD1D05135D003A5AEC /* MSSBasePopView.m */,
 				69ECDCE51D053CA8003A5AEC /* MSSAlertPopView.h */,
 				69ECDCE61D053CA8003A5AEC /* MSSAlertPopView.m */,
+				40DB70BF1D09BAAC00C83A24 /* MSSEdgeInsetsLabel.h */,
+				40DB70C01D09BAAC00C83A24 /* MSSEdgeInsetsLabel.m */,
 				69ECDCEB1D0549AC003A5AEC /* MSSCirclePopView.h */,
 				69ECDCEC1D0549AC003A5AEC /* MSSCirclePopView.m */,
 				69ECDCE81D054128003A5AEC /* MSSProgressPopView.h */,
@@ -291,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				690A24331CE0368500EB7C2F /* MSSRequestCache.m in Sources */,
+				40DB70C11D09BAAC00C83A24 /* MSSEdgeInsetsLabel.m in Sources */,
 				40D935021CDDF5920057E384 /* AFSecurityPolicy.m in Sources */,
 				40D935041CDDF5920057E384 /* AFURLResponseSerialization.m in Sources */,
 				69ECDCED1D0549AC003A5AEC /* MSSCirclePopView.m in Sources */,

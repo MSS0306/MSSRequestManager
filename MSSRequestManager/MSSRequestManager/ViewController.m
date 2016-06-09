@@ -98,7 +98,7 @@
     {
         NSMutableArray *batchRequestArray = [[NSMutableArray alloc]init];
         int i = 0;
-        for(i = 0;i < 21;i++)
+        for(i = 0;i < 11;i++)
         {
             MSSRequestModel *requestItem = [[MSSRequestModel alloc]init];
             requestItem.requestPath = @"Public/Member/UpdateHead";
@@ -118,7 +118,7 @@
         } finish:^(NSInteger failCount) {
             if(failCount == 0)
             {
-                [MSSAlertPopView showSuccessAlertPopViewWithAlertText:@"全部图片上传成功"];
+                [MSSAlertPopView showSuccessAlertPopViewWithAlertText:@"全部图片已经上传成功，测试一下字数长的情况"];
             }
             else
             {

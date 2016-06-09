@@ -7,6 +7,7 @@
 //
 
 #import "MSSAlertPopView.h"
+#import "MSSEdgeInsetsLabel.h"
 
 static const float alertDefaultTime = 1.0f;
 
@@ -62,16 +63,17 @@ static const float alertDefaultTime = 1.0f;
     maskView.layer.masksToBounds = YES;
     [self addSubview:maskView];
     
-    UILabel *alertLabel = [[UILabel alloc]init];
+    MSSEdgeInsetsLabel *alertLabel = [[MSSEdgeInsetsLabel alloc]init];
     alertLabel.textAlignment = NSTextAlignmentCenter;
     alertLabel.font = [UIFont boldSystemFontOfSize:14.0f];
     alertLabel.textColor = [UIColor whiteColor];
+    alertLabel.numberOfLines = 0;
+    alertLabel.edgeInsets = UIEdgeInsetsMake(10, 20, 15, 20);
     [maskView addSubview:alertLabel];
-    
-    CGRect textRect = [_alertText boundingRectWithSize:CGSizeMake(MAXFLOAT,MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:alertLabel.font} context:nil];
+    CGRect textRect = [_alertText boundingRectWithSize:CGSizeMake(200,MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:alertLabel.font} context:nil];
     CGSize size = textRect.size;
-    CGFloat width = size.width + 40;
-    CGFloat height = size.height + 30;
+    CGFloat width = size.width + alertLabel.edgeInsets.left + alertLabel.edgeInsets.right;
+    CGFloat height = size.height + alertLabel.edgeInsets.top + alertLabel.edgeInsets.bottom;
     alertLabel.text = _alertText;
 
     if(_type == MSSAlertPopViewDefaultType)
@@ -82,7 +84,7 @@ static const float alertDefaultTime = 1.0f;
     else
     {
         UIImageView *alertImageView = [[UIImageView alloc]init];
-        alertImageView.frame = CGRectMake((width - 42) / 2, 10, 42, 42);
+        alertImageView.frame = CGRectMake((width - 42) / 2, 15, 42, 42);
         if(_type == MSSAlertPopViewSuccessType)
         {
             alertImageView.image = [UIImage imageNamed:@"requestManagerSuccess"];
@@ -92,11 +94,9 @@ static const float alertDefaultTime = 1.0f;
             alertImageView.image = [UIImage imageNamed:@"requestManagerFail"];
         }
         [maskView addSubview:alertImageView];
-        
-        maskView.frame = CGRectMake((self.frame.size.width - width) / 2, (self.frame.size.height - height) / 2, width, height + 42);
-        alertLabel.frame = CGRectMake(0, maskView.frame.size.height - height, maskView.frame.size.width, height);
+        maskView.frame = CGRectMake((self.frame.size.width - width) / 2, (self.frame.size.height - height) / 2, width, height + CGRectGetMaxY(alertImageView.frame));
+        alertLabel.frame = CGRectMake(0, CGRectGetMaxY(alertImageView.frame), maskView.frame.size.width, maskView.frame.size.height - CGRectGetMaxY(alertImageView.frame));
     }
 }
-
 
 @end
