@@ -94,7 +94,9 @@ static const float alertDefaultTime = 1.0f;
             alertImageView.image = [UIImage imageNamed:@"requestManagerFail"];
         }
         [maskView addSubview:alertImageView];
-        maskView.frame = CGRectMake((self.frame.size.width - width) / 2, (self.frame.size.height - height) / 2, width, height + CGRectGetMaxY(alertImageView.frame));
+        
+        CGFloat maskViewHeight = height + CGRectGetMaxY(alertImageView.frame);
+        maskView.frame = CGRectMake((self.frame.size.width - width) / 2, (self.frame.size.height - maskViewHeight) / 2, width, maskViewHeight);
         alertLabel.frame = CGRectMake(0, CGRectGetMaxY(alertImageView.frame), maskView.frame.size.width, maskView.frame.size.height - CGRectGetMaxY(alertImageView.frame));
     }
 }
