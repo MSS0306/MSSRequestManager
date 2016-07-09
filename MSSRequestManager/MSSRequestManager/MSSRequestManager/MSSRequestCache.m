@@ -91,13 +91,13 @@
     return nil;
 }
 
-- (void)writeToCacheWithRequestItem:(MSSRequestModel *)requestItem
+- (void)writeToCacheWithRequestItem:(MSSRequestModel *)requestItem dict:(NSDictionary *)responseDict
 {
-    if(requestItem.responseDict)
+    if(responseDict)
     {
         dispatch_async(_serialQueue, ^{
             NSString *diskCachePath = [self getDiskCachePathWithRequestItem:requestItem];
-            [requestItem.responseDict writeToFile:diskCachePath atomically:YES];
+            [responseDict writeToFile:diskCachePath atomically:YES];
         });
     }
 }

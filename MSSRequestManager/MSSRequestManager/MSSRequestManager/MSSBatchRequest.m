@@ -7,6 +7,7 @@
 //
 
 #import "MSSBatchRequest.h"
+#import "MSSRequestGenerator.h"
 
 @interface MSSBatchRequest ()
 
@@ -56,18 +57,13 @@
     int i = 0;
     for (MSSRequestModel *requestItem in _requestItemArray)
     {
-        NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer] multipartFormRequestWithMethod:@"POST" URLString:requestItem.requestUrl parameters:requestItem.params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            if(requestItem.uploadData)
-            {
-                [formData appendPartWithFileData:requestItem.uploadData name:requestItem.uploadName fileName:requestItem.uploadFileName mimeType:requestItem.uploadMimeType];
-            }
-        } error:nil];
-        NSString *uploadLength = request.allHTTPHeaderFields[@"Content-Length"];
+        requestItem.request = [MSSRequestGenerator generateRequestWithRequestItem:requestItem];
+        NSString *uploadLength = requestItem.request.allHTTPHeaderFields[@"Content-Length"];
         if(uploadLength)
         {
             _totalLength += [uploadLength longLongValue];
         }
-        MSSBatchRequestOperation *operation = [[MSSBatchRequestOperation alloc]initWithRequest:request requestItem:requestItem];
+        MSSBatchRequestOperation *operation = [[MSSBatchRequestOperation alloc]initWithRequestItem:requestItem];
         operation.operationTag = [NSString stringWithFormat:@"%d",i + 1];
         operation.delegate = self;
         [_queue addOperation:operation];

@@ -8,13 +8,16 @@
 
 #import "ViewController.h"
 #import "MSSRequestManagerDefine.h"
-#import "AFURLSessionManager.h"
 #import "MSSAlertPopView.h"
+#import "MSSRequestLoginNetWork.h"
+#import "MSSRequestUploadHeadNetWork.h"
+#import "MSSBatchRequest.h"
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong)NSArray *dataArray;
 @property (nonatomic,copy)NSString *sid;
+@property (nonatomic,strong)MSSBatchRequest *batchRequest;
 
 @end
 
@@ -31,6 +34,8 @@
     tableView.tableFooterView = [[UIView alloc]init];
     
     _dataArray = @[@"post请求",@"上传一个文件",@"批量上传文件多个请求"];
+    
+    _batchRequest = [[MSSBatchRequest alloc]init];
     
 }
 
@@ -54,43 +59,22 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.row == 0)
-    {
-        MSSRequestModel *requestItem = [[MSSRequestModel alloc]init];
-        requestItem.params = @{@"username":@"18617823173",@"password":@"000000"};
-        requestItem.requestPath = @"Assistant/Login/index";
-        requestItem.cacheSecond = 30.0f;
-        requestItem.cacheFolderName = @"Login";
-        requestItem.isShowLoadingView = YES;
-        requestItem.loadingType = MSSRequestProgressType;
-        [[MSSRequestManager sharedInstance]startWithRequestItem:requestItem success:^(id responseObject) {
-            _sid = responseObject[@"content"][@"sid"];
-        } fail:^(NSError *error) {
+    {        
+        MSSRequestLoginNetWork *netWork = [[MSSRequestLoginNetWork alloc]init];
+        [netWork startRequestWithParams:@{@"username":@"18617823173",@"password":@"111111"} loadingSuperView:self.view success:^(MSSResponseModel *responseItem, id resultComponents) {
             
-        }];
+            _sid = resultComponents[@"content"][@"sid"];
+            
+        } fail:^(MSSResponseModel *responseItem) {
+            NSLog(@"error-->%@",responseItem.error);
+        }];        
     }
     else if(indexPath.row == 1)
     {
-        MSSRequestModel *requestItem = [[MSSRequestModel alloc]init];
-        requestItem.requestPath = @"Public/Member/UpdateHead";
-        requestItem.params = @{@"seller_id":@"49",@"user_id":@"1076",@"sid":[NSString stringWithFormat:@"%@",_sid]};
-        requestItem.loadingSuperView = self.view;
-        requestItem.loadingType = MSSRequestProgressType;
-        requestItem.failAlertText = @"上传头像失败";
-        requestItem.isShowSussessAlertView = YES;
-        requestItem.successAlertText = @"上传成功";
-        //    requestItem.uploadName = @"head";
-        //    requestItem.uploadFileName = @"1234567.jpg";
-        //    requestItem.uploadData = data;
-        
-        [requestItem setAFMultipartFormDataBlock:^(id<AFMultipartFormData> formData) {
-            NSString *path = [[NSBundle mainBundle]pathForResource:@"browse09" ofType:@"jpg"];
-            NSData *data = [[NSData alloc]initWithContentsOfFile:path];
-            [formData appendPartWithFileData:data name:@"head" fileName:@"1234567.jpg" mimeType:@"image/jpeg"];
-        }];
-        
-        [[MSSRequestManager sharedInstance]uploadFileWithRequestItem:requestItem success:^(id responseObject) {
+        MSSRequestUploadHeadNetWork *netWork = [[MSSRequestUploadHeadNetWork alloc]init];
+        [netWork startRequestWithParams:@{@"seller_id":@"49",@"user_id":@"1076",@"sid":[NSString stringWithFormat:@"%@",_sid]} loadingSuperView:self.view success:^(MSSResponseModel *responseItem, id resultComponents) {
             
-        } fail:^(NSError *error) {
+        } fail:^(MSSResponseModel *responseItem) {
             
         }];
     }
@@ -98,20 +82,20 @@
     {
         NSMutableArray *batchRequestArray = [[NSMutableArray alloc]init];
         int i = 0;
-        for(i = 0;i < 11;i++)
+        for(i = 0;i < 5;i++)
         {
             MSSRequestModel *requestItem = [[MSSRequestModel alloc]init];
-            requestItem.requestPath = @"Public/Member/UpdateHead";
+            requestItem.requestUrl = @"http://v2.toys178.com/Api/Public/Member/UpdateHead/Public/Member/UpdateHead";
             requestItem.params = @{@"seller_id":@"49",@"user_id":@"1076",@"sid":[NSString stringWithFormat:@"%@",_sid]};
-            NSString *path = [[NSBundle mainBundle]pathForResource:@"browse09" ofType:@"jpg"];
-            NSData *data = [[NSData alloc]initWithContentsOfFile:path];
-            requestItem.uploadName = @"head";
-            requestItem.uploadFileName = @"1234567.jpg";
-            requestItem.uploadData = data;
+            [requestItem setAFMultipartFormDataBlock:^(id<AFMultipartFormData> formData) {
+                NSString *path = [[NSBundle mainBundle]pathForResource:@"browse09" ofType:@"jpg"];
+                NSData *data = [[NSData alloc]initWithContentsOfFile:path];
+                [formData appendPartWithFileData:data name:@"head" fileName:@"1234567.jpg" mimeType:@"image/jpeg"];
+            }];
             [batchRequestArray addObject:requestItem];
         }
         
-        [[MSSRequestManager sharedInstance]uploadBatchFileWithRequestItemArray:batchRequestArray success:^(id responseObject) {
+        [_batchRequest uploadBatchFileWithRequestItemArray:batchRequestArray success:^(id responseObject, NSInteger successCount) {
             NSLog(@"成功");
         } fail:^(NSError *error) {
             NSLog(@"失败");
@@ -125,6 +109,8 @@
                 MSSAlertPopView *alertView = [[MSSAlertPopView alloc]initWithAlertText:[NSString stringWithFormat:@"%ld个图片上传失败",failCount] superView:self.view];
                 [alertView showPopViewWithShowTime:1.0 completion:nil];
             }
+        } progress:^(CGFloat progress) {
+            
         }];
     }
 }

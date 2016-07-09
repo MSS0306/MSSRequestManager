@@ -14,13 +14,12 @@
 @property (nonatomic,strong)MSSRequestModel *requestItem;
 @property (nonatomic,assign)BOOL isExecuting;
 @property (nonatomic,assign)BOOL isFinished;
-@property (nonatomic,strong)NSURLRequest *request;
 
 @end
 
 @implementation MSSBatchRequestOperation
 
-- (instancetype)initWithRequest:(NSURLRequest *)request requestItem:(MSSRequestModel *)requestItem
+- (instancetype)initWithRequestItem:(MSSRequestModel *)requestItem
 {
     self = [super init];
     if(self)
@@ -28,7 +27,6 @@
         _requestItem = requestItem;
         _isExecuting = NO;
         _isFinished = NO;
-        _request = request;
     }
     return self;
 }
@@ -43,18 +41,24 @@
             return;
         }
         self.isExecuting = YES;
-        [[MSSRequest sharedInstance]uploadFileWithRequest:_request requestItem:_requestItem success:^(id responseObject) {
-            if([_delegate respondsToSelector:@selector(requestSuccessResponseObject:)])
+        [[MSSRequest sharedInstance]startWithRequestItem:_requestItem completion:^(id responseObject, NSURLResponse *response, NSError *error) {
+            
+            if(error)
             {
-                [_delegate requestSuccessResponseObject:responseObject];
+                if([_delegate respondsToSelector:@selector(requestFailError:)])
+                {
+                    [_delegate requestFailError:error];
+                }
+                [self requestFinish];
             }
-            [self requestFinish];
-        } fail:^(NSError *error) {
-            if([_delegate respondsToSelector:@selector(requestFailError:)])
+            else
             {
-                [_delegate requestFailError:error];
+                if([_delegate respondsToSelector:@selector(requestSuccessResponseObject:)])
+                {
+                    [_delegate requestSuccessResponseObject:responseObject];
+                }
+                [self requestFinish];
             }
-            [self requestFinish];
         } progress:^(NSProgress *progress) {
             if([_delegate respondsToSelector:@selector(batchOperation:requestProgress:)])
             {
@@ -91,7 +95,7 @@
 
 - (void)cancelRequest
 {
-    [_requestItem.task cancel];
+    [[MSSRequest sharedInstance]cancelWithRequestItem:_requestItem];
     [super cancel];
 }
 

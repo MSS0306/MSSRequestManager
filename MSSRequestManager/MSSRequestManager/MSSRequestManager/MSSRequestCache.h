@@ -24,8 +24,9 @@
  *  写入缓存
  *
  *  @param requestItem 请求数据对象
+ *  @param requestItem response对象
  */
-- (void)writeToCacheWithRequestItem:(MSSRequestModel *)requestItem;
+- (void)writeToCacheWithRequestItem:(MSSRequestModel *)requestItem dict:(NSDictionary *)responseDict;
 /**
  *  清空指定缓存
  *

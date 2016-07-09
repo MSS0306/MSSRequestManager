@@ -2,136 +2,175 @@
 //  MSSRequestManager.m
 //  MSSRequestManager
 //
-//  Created by 于威 on 16/5/7.
+//  Created by 于威 on 16/7/3.
 //  Copyright © 2016年 于威. All rights reserved.
 //
 
 #import "MSSRequestManager.h"
-#import "MSSCirclePopView.h"
-#import "MSSAlertPopView.h"
-#import "MSSProgressPopView.h"
+#import "MSSRequest.h"
+#import "MSSRequestCache.h"
 #import "MSSBasePopView.h"
-
-@interface MSSRequestManager ()
-
-@property (nonatomic,strong)NSMutableArray *requestItemArray;
-@property (nonatomic,strong)MSSBatchRequest *batchRequest;
-
-@end
+#import "MSSCirclePopView.h"
+#import "MSSProgressPopView.h"
+#import "MSSAlertPopView.h"
 
 @implementation MSSRequestManager
 
-+ (MSSRequestManager *)sharedInstance
-{
-    static MSSRequestManager *sharedInstance;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc]init];
-    });
-    return sharedInstance;
-}
-
 - (instancetype)init
 {
-    self = [super init];
     if(self)
     {
-        _requestItemArray = [[NSMutableArray alloc]init];
+        _responseItem = [[MSSResponseModel alloc]init];
     }
     return self;
 }
 
-- (void)startWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail
+- (void)startRequestItem:(MSSRequestModel *)requestItem Success:(MSSRequestManagerSuccessBlock)success fail:(MSSRequestManagerFailBlock)fail
 {
-    MSSBasePopView *loadingView = nil;
-    // 显示加载框
-    if(requestItem.isShowLoadingView)
+    _requestItem = requestItem;
+    if(_requestItem.cachePolicy == MSSRequestUseLocalCachePolicy)
     {
-        loadingView = [self showPopViewWithRequestItem:requestItem];
+        // 判断缓存时间是否已过期
+        if(![[MSSRequestCache sharedInstance]cacheIsTimeOutWithRequestItem:_requestItem])
+        {
+            // 未过期读取缓存
+            NSDictionary *cacheDict = [self readCache];
+            if(cacheDict)
+            {
+                success(self);
+                return;
+            }
+        }
     }
-
-    [[MSSRequest sharedInstance]startWithRequestItem:requestItem success:^(id responseObject) {
-        [self hideRequestViewWithRequestItem:requestItem];
-        // 请求成功提示弹框
-        [self showSuccessAlertViewWithRequestItem:requestItem];
-
-        [_requestItemArray removeObject:requestItem];
-        if(success)
+    MSSBasePopView *loadingView = [self showPopViewWithRequestItem:_requestItem];
+    // 发送请求
+    [[MSSRequest sharedInstance]startWithRequestItem:_requestItem completion:^(id responseObject, NSURLResponse *response, NSError *error) {
+        
+        [self hideRequestViewWithRequestItem:_requestItem];
+        
+        if([response isKindOfClass:[NSHTTPURLResponse class]])
         {
-            success(responseObject);
+            _responseItem.reponseHeaders = ((NSHTTPURLResponse *)response).allHeaderFields;
+            _responseItem.statusCode = ((NSHTTPURLResponse *)response).statusCode;
         }
-    } fail:^(NSError *error) {
-        [self hideRequestViewWithRequestItem:requestItem];
-        // 请求失败提示弹框
-        [self showFailAlertViewWithRequestItem:requestItem];
-        [_requestItemArray removeObject:requestItem];
-        if(fail)
+        // 请求失败
+        if(error)
         {
-            fail(error);
+            _responseItem.error = error;
+            [self requestSuccess:success fail:fail];
+            // 显示失败提示
+            [self showFailAlertViewWithRequestItem:_requestItem];
         }
-    }progress:^(NSProgress *progress) {
-        if(requestItem.isShowLoadingView && requestItem.loadingType == MSSRequestProgressType)
+        // 请求成功
+        else
         {
-            MSSProgressPopView *progressPopView = (MSSProgressPopView *)loadingView;
-            progressPopView.progress = progress.fractionCompleted;
-        }
-    }];
-    [_requestItemArray addObject:requestItem];
-}
-
-- (void)uploadFileWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail
-{
-    MSSBasePopView *loadingView = nil;
-    // 显示加载框
-    if(requestItem.isShowLoadingView)
-    {
-        loadingView = [self showPopViewWithRequestItem:requestItem];
-    }
-    [[MSSRequest sharedInstance]uploadFileWithRequestItem:requestItem success:^(id responseObject) {
-        [self hideRequestViewWithRequestItem:requestItem];
-        // 请求成功提示弹框
-        [self showSuccessAlertViewWithRequestItem:requestItem];
-        [_requestItemArray removeObject:requestItem];
-        if(success)
-        {
-            success(responseObject);
-        }
-    } fail:^(NSError *error) {
-        [self hideRequestViewWithRequestItem:requestItem];
-        // 请求失败提示弹框
-        [self showFailAlertViewWithRequestItem:requestItem];
-        [_requestItemArray removeObject:requestItem];
-        if(fail)
-        {
-            fail(error);
+            if([responseObject isKindOfClass:[NSDictionary class]])
+            {
+                _responseItem.responseDict = responseObject;
+                [self requestSuccess:success];
+            }
+            // 显示成功提示
+            [self showSuccessAlertViewWithRequestItem:_requestItem];
         }
     } progress:^(NSProgress *progress) {
-        if(requestItem.isShowLoadingView && requestItem.loadingType == MSSRequestProgressType)
+        if(_requestItem.isShowLoadingView && _requestItem.loadingType == MSSRequestProgressType)
         {
             MSSProgressPopView *progressPopView = (MSSProgressPopView *)loadingView;
             progressPopView.progress = progress.fractionCompleted;
         }
     }];
-    [_requestItemArray addObject:requestItem];
 }
 
-- (MSSBasePopView *)showPopViewWithRequestItem:(MSSRequestModel *)requestItem
+- (void)cancelRequest
 {
-    MSSBasePopView *popView = nil;
-    if(!requestItem.loadingSuperView)
+    [[MSSRequest sharedInstance]cancelWithRequestItem:_requestItem];
+    [self hideRequestViewWithRequestItem:_requestItem];
+}
+
+- (void)requestSuccess:(MSSRequestManagerSuccessBlock)success
+{
+    if(_requestItem.cachePolicy == MSSRequestAlwaysReplaceLocalCachePolicy || _requestItem.cachePolicy == MSSRequestUseLocalCachePolicy)
     {
-        requestItem.loadingSuperView = [UIApplication sharedApplication].keyWindow;
+        // 写入缓存
+        [[MSSRequestCache sharedInstance]writeToCacheWithRequestItem:_requestItem dict:_responseItem.responseDict];
     }
-    if(requestItem.loadingType == MSSRequestCircleType)
+    if(success)
     {
-        popView = [[MSSCirclePopView alloc]initWithSuperView:requestItem.loadingSuperView];
+        success(self);
+    }
+}
+
+- (void)requestSuccess:(MSSRequestManagerSuccessBlock)success fail:(MSSRequestManagerFailBlock)fail
+{
+    // 请求失败读取缓存
+    if(_requestItem.cachePolicy == MSSRequestAlwaysReplaceLocalCachePolicy)
+    {
+        NSDictionary *cacheDict = [self readCache];
+        if(cacheDict)
+        {
+            success(self);
+        }
+        else
+        {
+            if(fail)
+            {
+                fail(self);
+            }
+        }
     }
     else
     {
-        popView = [[MSSProgressPopView alloc]initWithSuperView:requestItem.loadingSuperView];
+        if(fail)
+        {
+            fail(self);
+        }
     }
-    [popView showPopView];
-    return popView;
+}
+
+- (NSDictionary *)readCache
+{
+    // 读取缓存
+    NSDictionary *dict = [[MSSRequestCache sharedInstance]getCacheDictWithRequestItem:_requestItem];
+    if(dict)
+    {
+        _responseItem.isFromCache = YES;
+        _responseItem.responseDict = dict;
+    }
+    return dict;
+}
+
+#pragma mark PopView Method
+// 显示loading框
+- (MSSBasePopView *)showPopViewWithRequestItem:(MSSRequestModel *)requestItem
+{
+    if(requestItem.isShowLoadingView)
+    {
+        if(!requestItem.loadingSuperView)
+        {
+            requestItem.loadingSuperView = [UIApplication sharedApplication].keyWindow;
+        }
+        MSSBasePopView *popView = nil;
+        if(requestItem.loadingType == MSSRequestCircleType)
+        {
+            popView = [[MSSCirclePopView alloc]initWithSuperView:requestItem.loadingSuperView];
+        }
+        else
+        {
+            popView = [[MSSProgressPopView alloc]initWithSuperView:requestItem.loadingSuperView];
+        }
+        [popView showPopView];
+        return popView;
+    }
+    return nil;
+}
+
+// 隐藏loading框
+- (void)hideRequestViewWithRequestItem:(MSSRequestModel *)requestItem
+{
+    if(requestItem.isShowLoadingView)
+    {
+        [MSSBasePopView hidePopViewWithSuperView:requestItem.loadingSuperView];
+    }
 }
 
 // 请求成功提示弹框
@@ -163,68 +202,5 @@
     }
 }
 
-#pragma mark Cancel Method
-- (void)cancelWithRequestItem:(MSSRequestModel *)requestItem
-{
-    [self hideRequestViewWithRequestItem:requestItem];
-    [requestItem.task cancel];
-    [_requestItemArray removeObject:requestItem];
-}
-
-- (void)cancelAllRequest
-{
-    for (MSSRequestModel *requestItem in _requestItemArray)
-    {
-        [self hideRequestViewWithRequestItem:requestItem];
-        [requestItem.task cancel];
-    }
-    [_requestItemArray removeAllObjects];
-}
-
-- (void)hideRequestViewWithRequestItem:(MSSRequestModel *)requestItem
-{
-    [MSSBasePopView hidePopViewWithSuperView:requestItem.loadingSuperView];
-}
-
-#pragma mark BatchRequest Method
-// 批量上传图片
-- (void)uploadBatchFileWithRequestItemArray:(NSArray *)requestItemArray success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail finish:(MSSBatchRequestFinishBlock)finish
-{
-    MSSProgressPopView *progressView = (MSSProgressPopView *)[MSSProgressPopView showPopView];
-    [self.batchRequest uploadBatchFileWithRequestItemArray:requestItemArray success:^(id responseObject,NSInteger successCount) {
-        progressView.fileCountText = [NSString stringWithFormat:@"%ld",self.batchRequest.successCount];
-        if(success)
-        {
-            success(responseObject);
-        }
-    } fail:^(NSError *error) {
-        if(fail)
-        {
-            fail(error);
-        }
-    } finish:^(NSInteger failCount) {
-        [progressView hidePopViewWithCompletion:nil];
-        if(finish)
-        {
-            finish(failCount);
-        }
-    } progress:^(CGFloat progress) {
-        progressView.progress = progress;
-    }];
-}
-
-- (MSSBatchRequest *)batchRequest
-{
-    if(!_batchRequest)
-    {
-        _batchRequest = [[MSSBatchRequest alloc]init];
-    }
-    return _batchRequest;
-}
-
-- (void)cancelBatchRequest
-{
-    [_batchRequest cancelBatchRequest];
-}
 
 @end

@@ -21,7 +21,7 @@
 @property (nonatomic,copy)NSString *operationTag;
 @property (nonatomic,weak)id<MSSBatchRequestOperationDelegate> delegate;
 
-- (instancetype)initWithRequest:(NSURLRequest *)request requestItem:(MSSRequestModel *)requestItem;
+- (instancetype)initWithRequestItem:(MSSRequestModel *)requestItem;
 - (void)cancelRequest;
 
 @end

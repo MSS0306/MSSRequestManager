@@ -7,10 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MSSRequestModel.h"
+@class MSSRequestModel;
 
-typedef void(^MSSRequestSuccessBlock)(id responseObject);
-typedef void(^MSSRequestFailBlock)(NSError *error);
+typedef void(^MSSRequestCompletionBlock)(id responseObject,NSURLResponse *response,NSError *error);
 typedef void(^MSSRequestProgressBlock)(NSProgress *progress);
 
 @interface MSSRequest : NSObject
@@ -19,30 +18,22 @@ typedef void(^MSSRequestProgressBlock)(NSProgress *progress);
 /**
  *  发起一个请求
  *
- *  @param requestItem 请求参数数据对象
- *  @param success     请求成功回调
- *  @param fail        请求失败回调
+ *  @param requestItem 请求数据对象
+ *  @param completion  请求结果回调
  *  @param progress    进度条回调
- */
-- (void)startWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail progress:(MSSRequestProgressBlock)progress;
-/**
- *  发起一个上传文件请求
  *
- *  @param requestItem 请求参数数据对象
- *  @param success     请求成功回调
- *  @param fail        请求失败回调
- *  @param progress    进度条回调
+ *  @return task
  */
-- (void)uploadFileWithRequestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail progress:(MSSRequestProgressBlock)progress;
-
+- (NSURLSessionDataTask *)startWithRequestItem:(MSSRequestModel *)requestItem completion:(MSSRequestCompletionBlock)completion progress:(MSSRequestProgressBlock)progress;
 /**
- *  根据request发起一个上传文件请求
+ *  取消指定请求
  *
- *  @param request     request
- *  @param requestItem 请求参数数据对象
- *  @param success     请求成功回调
- *  @param fail        请求失败回调
- *  @param progress    进度条回调 */
-- (void)uploadFileWithRequest:(NSURLRequest *)request requestItem:(MSSRequestModel *)requestItem success:(MSSRequestSuccessBlock)success fail:(MSSRequestFailBlock)fail progress:(MSSRequestProgressBlock)progress;
+ *  @param requestItem 请求数据对象
+ */
+- (void)cancelWithRequestItem:(MSSRequestModel *)requestItem;
+/**
+ *  取消全部请求
+ */
+- (void)cancelAllRequest;
 
 @end
