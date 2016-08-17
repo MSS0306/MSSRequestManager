@@ -27,6 +27,7 @@
 		40D9350D1CDE0CA30057E384 /* MSSRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D9350A1CDE0CA30057E384 /* MSSRequestModel.m */; };
 		40DB70C11D09BAAC00C83A24 /* MSSEdgeInsetsLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DB70C01D09BAAC00C83A24 /* MSSEdgeInsetsLabel.m */; };
 		690A24331CE0368500EB7C2F /* MSSRequestCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 690A24321CE0368500EB7C2F /* MSSRequestCache.m */; };
+		69143DFC1D64A15B00E48E50 /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 69143DFB1D64A15B00E48E50 /* OpenUDID.m */; };
 		6946728A1D2A487F005331CF /* MSSRequestConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 694672891D2A487F005331CF /* MSSRequestConfig.m */; };
 		69787B6E1D28D1020049501C /* MSSRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 69787B6D1D28D1020049501C /* MSSRequestManager.m */; };
 		69787B711D28D8CF0049501C /* MSSRequestBaseNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 69787B701D28D8CF0049501C /* MSSRequestBaseNetwork.m */; };
@@ -85,6 +86,8 @@
 		40DB70C01D09BAAC00C83A24 /* MSSEdgeInsetsLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSEdgeInsetsLabel.m; sourceTree = "<group>"; };
 		690A24311CE0368500EB7C2F /* MSSRequestCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSRequestCache.h; sourceTree = "<group>"; };
 		690A24321CE0368500EB7C2F /* MSSRequestCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSRequestCache.m; sourceTree = "<group>"; };
+		69143DFA1D64A15B00E48E50 /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = "<group>"; };
+		69143DFB1D64A15B00E48E50 /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
 		694672881D2A487F005331CF /* MSSRequestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSRequestConfig.h; sourceTree = "<group>"; };
 		694672891D2A487F005331CF /* MSSRequestConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSRequestConfig.m; sourceTree = "<group>"; };
 		69787B6C1D28D1020049501C /* MSSRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSRequestManager.h; sourceTree = "<group>"; };
@@ -174,6 +177,7 @@
 		40D934EE1CDDC9AA0057E384 /* MSSRequestManager */ = {
 			isa = PBXGroup;
 			children = (
+				69143DF91D64A15B00E48E50 /* openUDID */,
 				69ECDCDB1D05135D003A5AEC /* MSSPopViews */,
 				40D9350F1CDE146A0057E384 /* MSSRequestManagerDefine.h */,
 				694672881D2A487F005331CF /* MSSRequestConfig.h */,
@@ -218,6 +222,15 @@
 				40D934FF1CDDF5920057E384 /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		69143DF91D64A15B00E48E50 /* openUDID */ = {
+			isa = PBXGroup;
+			children = (
+				69143DFA1D64A15B00E48E50 /* OpenUDID.h */,
+				69143DFB1D64A15B00E48E50 /* OpenUDID.m */,
+			);
+			path = openUDID;
 			sourceTree = "<group>";
 		};
 		69BA48831D317B76000E65B9 /* example */ = {
@@ -354,6 +367,7 @@
 				40D935011CDDF5920057E384 /* AFNetworkReachabilityManager.m in Sources */,
 				40D8D7781CDF2B84002EE8E5 /* MSSBatchRequestOperation.m in Sources */,
 				69787B711D28D8CF0049501C /* MSSRequestBaseNetwork.m in Sources */,
+				69143DFC1D64A15B00E48E50 /* OpenUDID.m in Sources */,
 				40D9350D1CDE0CA30057E384 /* MSSRequestModel.m in Sources */,
 				69ECDCDE1D05135D003A5AEC /* MSSBasePopView.m in Sources */,
 				69BA48891D3182E9000E65B9 /* MSSRequestUploadHeadNetWork.m in Sources */,

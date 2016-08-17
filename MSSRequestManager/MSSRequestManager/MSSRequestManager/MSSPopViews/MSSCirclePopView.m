@@ -38,6 +38,7 @@
     _rotationAnimation.toValue = [NSNumber numberWithFloat:(2 * M_PI)];
     _rotationAnimation.duration = 0.6f;
     _rotationAnimation.repeatCount = FLT_MAX;
+    _rotationAnimation.removedOnCompletion = NO;
     [self startAnimation];
 }
 

@@ -7,12 +7,32 @@
 //
 
 #import "MSSRequestConfig.h"
+#import "OpenUDID.h"
 
 @implementation MSSRequestConfig
 
 + (NSDictionary *)commonParams
 {
-    return nil;
+    NSMutableDictionary *params = [[NSMutableDictionary alloc]init];
+    // 唯一标识，三方库OpenUDID
+    [params setObject:[OpenUDID value] forKey:@"openUDID"];
+    
+    // device params
+    UIDevice *device = [UIDevice currentDevice];
+    [params setObject:device.name forKey:@"deviceName"];
+    [params setObject:device.model forKey:@"deviceModel"];
+    [params setObject:device.localizedModel forKey:@"deviceLocalizedModel"];
+    [params setObject:device.systemName forKey:@"deviceSystemName"];
+    [params setObject:device.systemVersion forKey:@"deviceSystemVersion"];
+    
+    // version params
+    NSDictionary *infoDictionary = [[NSBundle mainBundle]infoDictionary];
+    NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    NSString *appBuildVersion = [infoDictionary objectForKey:@"CFBundleVersion"];
+    [params setObject:appVersion forKey:@"appVersion"];
+    [params setObject:appBuildVersion forKey:@"appBuildVersion"];
+        
+    return params;
 }
 
 #pragma mark MSSRequestModel defaultConfig

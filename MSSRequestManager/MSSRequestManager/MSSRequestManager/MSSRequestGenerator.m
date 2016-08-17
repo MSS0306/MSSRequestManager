@@ -32,9 +32,11 @@
     }
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc]init];
-    if([MSSRequestConfig commonParams])
+    
+    NSDictionary *commonParams = [MSSRequestConfig commonParams];
+    if(commonParams)
     {
-        [params addEntriesFromDictionary:[MSSRequestConfig commonParams]];
+        [params addEntriesFromDictionary:commonParams];
     }
     [params addEntriesFromDictionary:requestItem.params];
     
